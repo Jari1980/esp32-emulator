@@ -46,4 +46,9 @@ public class TemperatureSensor implements Device {
                 )
         );
     }
+
+    public void update() {
+        double variation = (Math.random() - 0.5);
+        setTemperature(temperature + variation);
+    }
 }

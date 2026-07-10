@@ -6,12 +6,24 @@ import ESP32.Emulator.event.EventBus;
 import ESP32.Emulator.gpio.GpioPin;
 import ESP32.Emulator.sensor.TemperatureSensor;
 
-public class Esp32Emulator {
+public class Esp32Emulator implements EmulatorLifecycle{
     private final EventBus eventBus;
     private Esp32 esp32;
     private TemperatureSensor temperatureSensor;
     private Led led;
 
+
+    @Override
+    public void setup() {
+        System.out.println("ESP32 starting...");
+        System.out.println("Device: " + esp32.getName());
+    }
+
+    @Override
+    public void loop() {
+        temperatureSensor.update();
+        //System.out.println("ESP32 loop running...");
+    }
 
     public Esp32Emulator() {
         this.eventBus = new EventBus();
