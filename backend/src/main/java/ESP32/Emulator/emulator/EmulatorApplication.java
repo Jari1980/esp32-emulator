@@ -9,38 +9,23 @@ import ESP32.Emulator.sensor.TemperatureSensor;
 public class EmulatorApplication {
     public static void main(String[] args) {
 
-        EventBus eventBus = new EventBus();
+        Esp32Emulator emulator = new Esp32Emulator();
 
-        eventBus.subscribe(event -> {
-            System.out.println("EVENT: " + event);
-        });
+        emulator.getEventBus()
+                .subscribe(event -> {
+                    System.out.println(
+                            "EVENT: " + event
+                    );
+                });
 
-        Esp32 esp32 = new Esp32(
-                "esp32-001",
-                "My ESP32"
-        );
+        System.out.println(emulator.getEsp32().getName());
 
-        TemperatureSensor temperature =
-                new TemperatureSensor(
-                        "temp-001",
-                        "Temperature Sensor",
-                        eventBus
-                );
+        emulator.getTemperatureSensor()
+                .setTemperature(25.5);
 
-        esp32.addDevice(temperature);
+        emulator.getLed()
+                .turnOn();
 
-        System.out.println(esp32.getName());
-        System.out.println(temperature.getTemperature());
-
-        temperature.setTemperature(25.5);
-
-        GpioPin gpio2 = esp32.getPin(2);
-        Led led = new Led(
-                "led-001",
-                "Built-in LED",
-                gpio2
-        );
-        led.turnOn();
-        System.out.println("LED state: " + led.isOn());
+        System.out.println("LED: " + emulator.getLed().isOn());
     }
 }
