@@ -5,6 +5,7 @@ import ESP32.Emulator.device.Esp32;
 import ESP32.Emulator.event.EventBus;
 import ESP32.Emulator.gpio.GpioPin;
 import ESP32.Emulator.sensor.TemperatureSensor;
+import ESP32.Emulator.state.Esp32State;
 
 public class Esp32Emulator implements EmulatorLifecycle{
     private final EventBus eventBus;
@@ -69,5 +70,15 @@ public class Esp32Emulator implements EmulatorLifecycle{
 
     public Led getLed() {
         return led;
+    }
+
+    public Esp32State getState() {
+
+        return new Esp32State(
+                esp32.getId(),
+                esp32.getName(),
+                temperatureSensor.getTemperature(),
+                led.isOn()
+        );
     }
 }

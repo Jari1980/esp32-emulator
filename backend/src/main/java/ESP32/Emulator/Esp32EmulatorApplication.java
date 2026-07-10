@@ -19,7 +19,9 @@ public class Esp32EmulatorApplication {
 
         EmulatorRunner runner = new EmulatorRunner(emulator);
 
+        System.out.println(emulator.getState());
         runner.start();
+
 	}
 
 }
