@@ -1,9 +1,9 @@
 package ESP32.Emulator.actuator;
 
 import ESP32.Emulator.device.Device;
+import ESP32.Emulator.device.DeviceStateChangedEvent;
 import ESP32.Emulator.device.StateProvider;
 import ESP32.Emulator.event.EventBus;
-import ESP32.Emulator.event.LedStateChangedEvent;
 import ESP32.Emulator.gpio.GpioPin;
 import ESP32.Emulator.gpio.PinMode;
 import ESP32.Emulator.gpio.PinState;
@@ -36,10 +36,9 @@ public class Led implements Device, StateProvider {
 
         if (oldState != newState) {
             eventBus.publish(
-                    new LedStateChangedEvent(
+                    new DeviceStateChangedEvent(
                             id,
-                            oldState,
-                            newState,
+                            getState(),
                             Instant.now()
                     )
             );
@@ -53,10 +52,9 @@ public class Led implements Device, StateProvider {
 
         if (oldState != newState) {
             eventBus.publish(
-                    new LedStateChangedEvent(
+                    new DeviceStateChangedEvent(
                             id,
-                            oldState,
-                            newState,
+                            getState(),
                             Instant.now()
                     )
             );
@@ -69,7 +67,6 @@ public class Led implements Device, StateProvider {
 
     @Override
     public Map<String, Object> getState() {
-
         return Map.of(
                 "ledOn",
                 isOn()
