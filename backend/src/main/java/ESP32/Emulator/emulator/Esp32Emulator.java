@@ -12,6 +12,8 @@ public class Esp32Emulator implements EmulatorLifecycle{
     private Esp32 esp32;
     private TemperatureSensor temperatureSensor;
     private Led led;
+    private Esp32State currentState;
+    private long uptime;
 
 
     @Override
@@ -22,13 +24,15 @@ public class Esp32Emulator implements EmulatorLifecycle{
 
     @Override
     public void loop() {
+        uptime++;
         temperatureSensor.update();
-        //System.out.println("ESP32 loop running...");
+        currentState = createState();
     }
 
     public Esp32Emulator() {
         this.eventBus = new EventBus();
         initialize();
+        currentState = createState();
     }
 
     private void initialize() {
@@ -72,11 +76,15 @@ public class Esp32Emulator implements EmulatorLifecycle{
         return led;
     }
 
-    public Esp32State getState() {
+    public Esp32State getCurrentState() {
+        return currentState;
+    }
 
+    private Esp32State createState() {
         return new Esp32State(
                 esp32.getId(),
                 esp32.getName(),
+                uptime,
                 temperatureSensor.getTemperature(),
                 led.isOn()
         );
