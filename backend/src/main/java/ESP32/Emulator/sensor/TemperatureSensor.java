@@ -1,13 +1,14 @@
 package ESP32.Emulator.sensor;
 
 import ESP32.Emulator.device.Device;
+import ESP32.Emulator.device.Updatable;
 import ESP32.Emulator.event.EventBus;
 import ESP32.Emulator.event.TemperatureChangedEvent;
 import lombok.Getter;
 import lombok.Setter;
 
 
-public class TemperatureSensor implements Device {
+public class TemperatureSensor implements Device, Updatable {
     private final String id;
     private final String name;
 
@@ -47,6 +48,7 @@ public class TemperatureSensor implements Device {
         );
     }
 
+    @Override
     public void update() {
         double variation = (Math.random() - 0.5);
         setTemperature(temperature + variation);

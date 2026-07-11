@@ -58,6 +58,8 @@ public class Esp32Emulator implements EmulatorLifecycle{
                 "Built-in LED",
                 gpio2
         );
+
+        esp32.addDevice(led);
     }
 
     public EventBus getEventBus() {

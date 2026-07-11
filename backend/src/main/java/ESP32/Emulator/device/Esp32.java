@@ -29,7 +29,7 @@ public class Esp32 {
         devices.add(device);
     }
 
-    public List<Device> getDevice() {
+    public List<Device> getDevices() {
         return List.copyOf(devices);
     }
 
