@@ -1,0 +1,17 @@
+{
+  "id": "esp32-001",
+  "name": "Virtual ESP32",
+  "devices": [
+    {
+      "type": "temperature",
+      "id": "temp-001",
+      "name": "Temperature Sensor"
+    },
+    {
+      "type": "led",
+      "id": "led-001",
+      "name": "Built-in LED",
+      "gpio": 2
+    }
+  ]
+}

@@ -1,25 +1,24 @@
 package ESP32.Emulator.emulator;
 
-import ESP32.Emulator.actuator.Led;
 import ESP32.Emulator.command.CommandHandler;
-import ESP32.Emulator.device.Device;
-import ESP32.Emulator.device.Esp32;
-import ESP32.Emulator.device.StateProvider;
-import ESP32.Emulator.device.Updatable;
+import ESP32.Emulator.device.*;
 import ESP32.Emulator.event.EventBus;
-import ESP32.Emulator.gpio.GpioPin;
-import ESP32.Emulator.sensor.TemperatureSensor;
 import ESP32.Emulator.state.Esp32State;
+import ESP32.Emulator.config.ConfigurationLoader;
+import ESP32.Emulator.config.Esp32Config;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Esp32Emulator implements EmulatorLifecycle{
     private final EventBus eventBus;
+    private final Esp32Factory factory;
+
     private Esp32 esp32;
     private Esp32State currentState;
     private long uptime;
     private CommandHandler commandHandler;
+
 
 
     @Override
@@ -41,34 +40,16 @@ public class Esp32Emulator implements EmulatorLifecycle{
 
     public Esp32Emulator() {
         this.eventBus = new EventBus();
+        this.factory = new Esp32Factory(eventBus);
         initialize();
         commandHandler = new CommandHandler(esp32);
         currentState = createState();
     }
 
     private void initialize() {
-        esp32 = new Esp32(
-                "esp32-001",
-                "Virtual ESP32"
-        );
-        TemperatureSensor temperatureSensor =
-                new TemperatureSensor(
-                        "temp-001",
-                        "Temperature Sensor",
-                        eventBus
-                );
-
-        esp32.addDevice(temperatureSensor);
-        GpioPin gpio2 = esp32.getPin(2);
-
-        Led led = new Led(
-                "led-001",
-                "Built-in LED",
-                gpio2,
-                eventBus
-        );
-
-        esp32.addDevice(led);
+        ConfigurationLoader loader = new ConfigurationLoader();
+        Esp32Config config = loader.load();
+        esp32 = factory.create(config);
     }
 
     public EventBus getEventBus() {
