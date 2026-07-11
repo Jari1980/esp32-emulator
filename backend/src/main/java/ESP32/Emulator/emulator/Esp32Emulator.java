@@ -1,6 +1,7 @@
 package ESP32.Emulator.emulator;
 
 import ESP32.Emulator.actuator.Led;
+import ESP32.Emulator.command.CommandHandler;
 import ESP32.Emulator.device.Device;
 import ESP32.Emulator.device.Esp32;
 import ESP32.Emulator.device.StateProvider;
@@ -18,6 +19,7 @@ public class Esp32Emulator implements EmulatorLifecycle{
     private Esp32 esp32;
     private Esp32State currentState;
     private long uptime;
+    private CommandHandler commandHandler;
 
 
     @Override
@@ -40,6 +42,7 @@ public class Esp32Emulator implements EmulatorLifecycle{
     public Esp32Emulator() {
         this.eventBus = new EventBus();
         initialize();
+        commandHandler = new CommandHandler(esp32);
         currentState = createState();
     }
 
@@ -96,5 +99,9 @@ public class Esp32Emulator implements EmulatorLifecycle{
                 uptime,
                 states
         );
+    }
+
+    public CommandHandler getCommandHandler() {
+        return commandHandler;
     }
 }

@@ -1,6 +1,8 @@
 package ESP32.Emulator.emulator;
 
 import ESP32.Emulator.actuator.Led;
+import ESP32.Emulator.command.CommandHandler;
+import ESP32.Emulator.command.TurnOnLedCommand;
 import ESP32.Emulator.device.Esp32;
 import ESP32.Emulator.event.EventBus;
 import ESP32.Emulator.gpio.GpioPin;
@@ -28,7 +30,9 @@ public class EmulatorApplication {
 
 
         Led led = (Led) emulator.getEsp32().getDevice("led-001");
-        led.turnOn();
+        //led.turnOn();
+        emulator.getCommandHandler()
+                .execute(new TurnOnLedCommand("led-001"));
 
         System.out.println("LED: " + led.isOn());
     }
