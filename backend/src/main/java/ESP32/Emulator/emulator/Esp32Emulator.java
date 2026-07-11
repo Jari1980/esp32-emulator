@@ -1,17 +1,21 @@
 package ESP32.Emulator.emulator;
 
 import ESP32.Emulator.actuator.Led;
+import ESP32.Emulator.device.Device;
 import ESP32.Emulator.device.Esp32;
+import ESP32.Emulator.device.StateProvider;
+import ESP32.Emulator.device.Updatable;
 import ESP32.Emulator.event.EventBus;
 import ESP32.Emulator.gpio.GpioPin;
 import ESP32.Emulator.sensor.TemperatureSensor;
 import ESP32.Emulator.state.Esp32State;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Esp32Emulator implements EmulatorLifecycle{
     private final EventBus eventBus;
     private Esp32 esp32;
-    private TemperatureSensor temperatureSensor;
-    private Led led;
     private Esp32State currentState;
     private long uptime;
 
@@ -25,7 +29,11 @@ public class Esp32Emulator implements EmulatorLifecycle{
     @Override
     public void loop() {
         uptime++;
-        temperatureSensor.update();
+        for (Device device : esp32.getDevices()) {
+            if (device instanceof Updatable updatable) {
+                updatable.update();
+            }
+        }
         currentState = createState();
     }
 
@@ -42,7 +50,7 @@ public class Esp32Emulator implements EmulatorLifecycle{
                 "Virtual ESP32"
         );
 
-        temperatureSensor =
+        TemperatureSensor temperatureSensor =
                 new TemperatureSensor(
                         "temp-001",
                         "Temperature Sensor",
@@ -53,7 +61,7 @@ public class Esp32Emulator implements EmulatorLifecycle{
 
         GpioPin gpio2 = esp32.getPin(2);
 
-        led = new Led(
+        Led led = new Led(
                 "led-001",
                 "Built-in LED",
                 gpio2
@@ -70,25 +78,23 @@ public class Esp32Emulator implements EmulatorLifecycle{
         return esp32;
     }
 
-    public TemperatureSensor getTemperatureSensor() {
-        return temperatureSensor;
-    }
-
-    public Led getLed() {
-        return led;
-    }
-
     public Esp32State getCurrentState() {
         return currentState;
     }
 
     private Esp32State createState() {
+        Map<String,Object> states = new HashMap<>();
+
+        for (Device device : esp32.getDevices()) {
+            if (device instanceof StateProvider provider) {
+                states.putAll(provider.getState());
+            }
+        }
         return new Esp32State(
                 esp32.getId(),
                 esp32.getName(),
                 uptime,
-                temperatureSensor.getTemperature(),
-                led.isOn()
+                states
         );
     }
 }

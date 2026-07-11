@@ -1,14 +1,17 @@
 package ESP32.Emulator.sensor;
 
 import ESP32.Emulator.device.Device;
+import ESP32.Emulator.device.StateProvider;
 import ESP32.Emulator.device.Updatable;
 import ESP32.Emulator.event.EventBus;
 import ESP32.Emulator.event.TemperatureChangedEvent;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Map;
 
-public class TemperatureSensor implements Device, Updatable {
+
+public class TemperatureSensor implements Device, Updatable, StateProvider {
     private final String id;
     private final String name;
 
@@ -52,5 +55,14 @@ public class TemperatureSensor implements Device, Updatable {
     public void update() {
         double variation = (Math.random() - 0.5);
         setTemperature(temperature + variation);
+    }
+
+    @Override
+    public Map<String, Object> getState() {
+
+        return Map.of(
+                "temperature",
+                temperature
+        );
     }
 }

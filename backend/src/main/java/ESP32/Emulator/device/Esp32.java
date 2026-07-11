@@ -40,4 +40,16 @@ public class Esp32 {
     public Map<Integer, GpioPin> getPins() {
         return Map.copyOf(pins);
     }
+
+    public Device getDevice(String id) {
+
+        return devices.stream()
+                .filter(device -> device.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "Device not found: " + id
+                        )
+                );
+    }
 }

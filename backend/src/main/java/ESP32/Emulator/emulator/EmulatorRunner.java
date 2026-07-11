@@ -1,10 +1,10 @@
 package ESP32.Emulator.emulator;
 
 public class EmulatorRunner {
-    private final EmulatorLifecycle emulator;
+    private final Esp32Emulator emulator;
 
 
-    public EmulatorRunner(EmulatorLifecycle emulator) {
+    public EmulatorRunner(Esp32Emulator emulator) {
         this.emulator = emulator;
     }
 
@@ -14,6 +14,7 @@ public class EmulatorRunner {
 
         while (true) {
             emulator.loop();
+            System.out.println(emulator.getCurrentState());
             try {
                 Thread.sleep(1000);
             }

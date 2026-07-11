@@ -6,6 +6,7 @@ import ESP32.Emulator.event.EventBus;
 import ESP32.Emulator.gpio.GpioPin;
 import ESP32.Emulator.sensor.TemperatureSensor;
 
+//Temporal test
 public class EmulatorApplication {
     public static void main(String[] args) {
 
@@ -20,12 +21,15 @@ public class EmulatorApplication {
 
         System.out.println(emulator.getEsp32().getName());
 
-        emulator.getTemperatureSensor()
-                .setTemperature(25.5);
+        TemperatureSensor temperatureSensor =
+                (TemperatureSensor) emulator.getEsp32().getDevice("temp-001");
 
-        emulator.getLed()
-                .turnOn();
+        temperatureSensor.setTemperature(25.5);
 
-        System.out.println("LED: " + emulator.getLed().isOn());
+
+        Led led = (Led) emulator.getEsp32().getDevice("led-001");
+        led.turnOn();
+
+        System.out.println("LED: " + led.isOn());
     }
 }
