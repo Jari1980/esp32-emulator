@@ -47,12 +47,10 @@ public class Esp32Emulator implements EmulatorLifecycle{
     }
 
     private void initialize() {
-
         esp32 = new Esp32(
                 "esp32-001",
                 "Virtual ESP32"
         );
-
         TemperatureSensor temperatureSensor =
                 new TemperatureSensor(
                         "temp-001",
@@ -61,13 +59,13 @@ public class Esp32Emulator implements EmulatorLifecycle{
                 );
 
         esp32.addDevice(temperatureSensor);
-
         GpioPin gpio2 = esp32.getPin(2);
 
         Led led = new Led(
                 "led-001",
                 "Built-in LED",
-                gpio2
+                gpio2,
+                eventBus
         );
 
         esp32.addDevice(led);

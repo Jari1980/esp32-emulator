@@ -31,4 +31,12 @@ public class GpioPin {
     public void setState(PinState state) {
         this.state = state;
     }
+
+    public void high() {
+        this.state = PinState.HIGH;
+    }
+
+    public void low() {
+        this.state = PinState.LOW;
+    }
 }
