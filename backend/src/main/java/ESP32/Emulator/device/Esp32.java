@@ -3,7 +3,7 @@ package ESP32.Emulator.device;
 import ESP32.Emulator.gpio.GpioPin;
 import lombok.Getter;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +14,7 @@ public class Esp32 {
     @Getter
     private final String name;
 
-    private final List<Device> devices = new ArrayList<>();
+    private final DeviceRegistry deviceRegistry = new DeviceRegistry();
     private final Map<Integer, GpioPin> pins = new HashMap<>();
 
     public Esp32(String id, String name) {
@@ -26,11 +26,11 @@ public class Esp32 {
     }
 
     public void addDevice(Device device){
-        devices.add(device);
+        deviceRegistry.register(device);
     }
 
-    public List<Device> getDevices() {
-        return List.copyOf(devices);
+    public Collection<Device> getDevices() {
+        return deviceRegistry.getAll();
     }
 
     public GpioPin getPin(int number) {
@@ -42,14 +42,6 @@ public class Esp32 {
     }
 
     public Device getDevice(String id) {
-
-        return devices.stream()
-                .filter(device -> device.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() ->
-                        new IllegalArgumentException(
-                                "Device not found: " + id
-                        )
-                );
+        return deviceRegistry.get(id);
     }
 }
