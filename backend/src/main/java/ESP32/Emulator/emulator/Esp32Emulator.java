@@ -1,5 +1,6 @@
 package ESP32.Emulator.emulator;
 
+import ESP32.Emulator.command.Command;
 import ESP32.Emulator.command.CommandHandler;
 import ESP32.Emulator.device.*;
 import ESP32.Emulator.event.EventBus;
@@ -17,7 +18,7 @@ public class Esp32Emulator implements EmulatorLifecycle{
     private Esp32 esp32;
     private Esp32State currentState;
     private long uptime;
-    private CommandHandler commandHandler;
+    private final CommandHandler commandHandler;
 
 
 
@@ -82,5 +83,9 @@ public class Esp32Emulator implements EmulatorLifecycle{
 
     public CommandHandler getCommandHandler() {
         return commandHandler;
+    }
+
+    public void execute(Command command) {
+        commandHandler.execute(command);
     }
 }
