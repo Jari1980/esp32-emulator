@@ -44,4 +44,8 @@ public class Esp32 {
     public Device getDevice(String id) {
         return deviceRegistry.get(id);
     }
+
+    public DeviceRegistry getDeviceRegistry() {
+        return deviceRegistry;
+    }
 }

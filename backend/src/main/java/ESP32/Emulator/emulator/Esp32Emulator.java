@@ -43,7 +43,7 @@ public class Esp32Emulator implements EmulatorLifecycle{
         this.eventBus = new EventBus();
         this.factory = new Esp32Factory(eventBus);
         initialize();
-        commandHandler = new CommandHandler(esp32);
+        commandHandler = new CommandHandler(esp32.getDeviceRegistry());
         currentState = createState();
     }
 

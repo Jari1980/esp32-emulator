@@ -39,11 +39,7 @@ public class TemperatureSensor implements Device, Updatable, StateProvider {
     }
 
     public void setTemperature(double temperature) {
-
-        double oldTemperature = this.temperature;
-
         this.temperature = temperature;
-
         eventBus.publish(
                 new DeviceStateChangedEvent(
                         id,
