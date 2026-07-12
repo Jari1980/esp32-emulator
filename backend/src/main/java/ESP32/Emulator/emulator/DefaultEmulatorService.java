@@ -1,6 +1,7 @@
 package ESP32.Emulator.emulator;
 
 import ESP32.Emulator.command.Command;
+import ESP32.Emulator.event.EventListener;
 import ESP32.Emulator.state.Esp32State;
 
 public class DefaultEmulatorService implements EmulatorService{
@@ -18,5 +19,11 @@ public class DefaultEmulatorService implements EmulatorService{
     @Override
     public void execute(Command command) {
         emulator.execute(command);
+    }
+
+    @Override
+    public void subscribe(EventListener listener) {
+        emulator.getEventBus()
+                .subscribe(listener);
     }
 }
