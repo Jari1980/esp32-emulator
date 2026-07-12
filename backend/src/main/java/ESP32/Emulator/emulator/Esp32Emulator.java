@@ -13,13 +13,11 @@ import java.util.Map;
 
 public class Esp32Emulator implements EmulatorLifecycle{
     private final EventBus eventBus;
-    private final Esp32Factory factory;
-
-    private Esp32 esp32;
-    private Esp32State currentState;
-    private long uptime;
+    private final Esp32 esp32;
     private final CommandHandler commandHandler;
 
+    private Esp32State currentState;
+    private long uptime;
 
 
     @Override
@@ -39,18 +37,11 @@ public class Esp32Emulator implements EmulatorLifecycle{
         currentState = createState();
     }
 
-    public Esp32Emulator() {
-        this.eventBus = new EventBus();
-        this.factory = new Esp32Factory(eventBus);
-        initialize();
-        commandHandler = new CommandHandler(esp32.getDeviceRegistry());
-        currentState = createState();
-    }
-
-    private void initialize() {
-        ConfigurationLoader loader = new ConfigurationLoader();
-        Esp32Config config = loader.load();
-        esp32 = factory.create(config);
+    public Esp32Emulator(Esp32 esp32, EventBus eventBus, CommandHandler commandHandler) {
+        this.esp32 = esp32;
+        this.eventBus = eventBus;
+        this.commandHandler = commandHandler;
+        this.currentState = createState();
     }
 
     public EventBus getEventBus() {

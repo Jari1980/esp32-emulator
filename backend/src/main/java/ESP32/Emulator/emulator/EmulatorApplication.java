@@ -1,18 +1,14 @@
 package ESP32.Emulator.emulator;
 
 import ESP32.Emulator.actuator.Led;
-import ESP32.Emulator.command.CommandHandler;
 import ESP32.Emulator.command.TurnOnLedCommand;
-import ESP32.Emulator.device.Esp32;
-import ESP32.Emulator.event.EventBus;
-import ESP32.Emulator.gpio.GpioPin;
 import ESP32.Emulator.sensor.TemperatureSensor;
 
 //Temporal test
 public class EmulatorApplication {
     public static void main(String[] args) {
 
-        Esp32Emulator emulator = new Esp32Emulator();
+        Esp32Emulator emulator = new EmulatorBootstrap().create();
 
         emulator.getEventBus()
                 .subscribe(event -> {
