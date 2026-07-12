@@ -1,6 +1,7 @@
 package ESP32.Emulator.publisher;
 
 import ESP32.Emulator.dto.Esp32StateDto;
+import ESP32.Emulator.message.StateMessage;
 import ESP32.Emulator.websocket.EmulatorWebSocketServer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -16,6 +17,7 @@ public class WebSocketStatePublisher implements StatePublisher{
     @Override
     public void publish(Esp32StateDto state) {
         try {
+            StateMessage message = new StateMessage(state);
             String json = mapper.writeValueAsString(state);
             server.broadcast(json);
         } catch (Exception e) {

@@ -49,6 +49,10 @@ public class Esp32Emulator implements EmulatorLifecycle{
         });
     }
 
+    public void refreshState() {
+        currentState = createState();
+    }
+
     public EventBus getEventBus() {
         return eventBus;
     }
