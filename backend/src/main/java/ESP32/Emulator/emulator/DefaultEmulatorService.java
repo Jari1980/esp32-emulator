@@ -1,7 +1,6 @@
 package ESP32.Emulator.emulator;
 
 import ESP32.Emulator.command.Command;
-import ESP32.Emulator.command.CommandHandler;
 import ESP32.Emulator.state.Esp32State;
 
 public class DefaultEmulatorService implements EmulatorService{

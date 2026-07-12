@@ -13,12 +13,7 @@ public class CommandHandler {
     }
 
     public void execute(Command command) {
-
         Device device = esp32.getDevice(command.getDeviceId());
-
-        if (command instanceof TurnOnLedCommand) {
-            Led led = (Led) device;
-            led.turnOn();
-        }
+        command.execute(device);
     }
 }
