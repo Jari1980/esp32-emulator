@@ -7,12 +7,15 @@ import org.java_websocket.server.WebSocketServer;
 import java.net.InetSocketAddress;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.function.Supplier;
 
 public class EmulatorWebSocketServer extends WebSocketServer {
     private final Set<WebSocket> clients = new CopyOnWriteArraySet<>();
+    private final Supplier<String> stateSupplier;
 
-    public EmulatorWebSocketServer(int port) {
+    public EmulatorWebSocketServer(int port, Supplier<String> stateSupplier) {
         super(new InetSocketAddress(port));
+        this.stateSupplier = stateSupplier;
     }
 
     public void broadcast(String message) {
@@ -25,6 +28,7 @@ public class EmulatorWebSocketServer extends WebSocketServer {
     public void onOpen(WebSocket connection, ClientHandshake handshake) {
         clients.add(connection);
         System.out.println("WebSocket client connected");
+        connection.send(stateSupplier.get());
     }
 
     @Override

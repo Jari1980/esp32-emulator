@@ -2,23 +2,39 @@ package ESP32.Emulator.emulator;
 
 import ESP32.Emulator.actuator.Led;
 import ESP32.Emulator.command.TurnOnLedCommand;
+import ESP32.Emulator.mapper.StateMapper;
 import ESP32.Emulator.publisher.ConsoleStatePublisher;
+import ESP32.Emulator.publisher.WebSocketStatePublisher;
 import ESP32.Emulator.sensor.TemperatureSensor;
 import ESP32.Emulator.websocket.EmulatorWebSocketServer;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 //Temporal test
 public class EmulatorApplication {
     public static void main(String[] args) {
-        EmulatorWebSocketServer websocket = new EmulatorWebSocketServer(8080);
+        Esp32Emulator emulator = new EmulatorBootstrap().create();
+        ObjectMapper mapper = new ObjectMapper();
+
+        EmulatorWebSocketServer websocket = new EmulatorWebSocketServer(
+                8080,
+                () -> {
+                    try {
+                        return mapper.writeValueAsString(
+                                new StateMapper()
+                                        .map(
+                                                emulator.getCurrentState()
+                                        ));
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                );
         websocket.start();
 
-        Esp32Emulator emulator = new EmulatorBootstrap().create();
-        EmulatorService service = new DefaultEmulatorService(emulator, new ConsoleStatePublisher());
-
-        emulator.getEventBus()
-                .subscribe(event -> {
-                    System.out.println("EVENT: " + event);
-                });
+        EmulatorService service = new DefaultEmulatorService(
+                emulator,
+                new WebSocketStatePublisher(websocket)
+        );
 
         //System.out.println(emulator.getEsp32().getName());
 
