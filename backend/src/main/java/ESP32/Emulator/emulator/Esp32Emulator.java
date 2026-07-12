@@ -8,7 +8,9 @@ import ESP32.Emulator.state.Esp32State;
 import ESP32.Emulator.config.ConfigurationLoader;
 import ESP32.Emulator.config.Esp32Config;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Esp32Emulator implements EmulatorLifecycle{
@@ -60,18 +62,24 @@ public class Esp32Emulator implements EmulatorLifecycle{
     }
 
     private Esp32State createState() {
-        Map<String,Object> states = new HashMap<>();
+        List<DeviceState> devices = new ArrayList<>();
 
-        for (Device device : esp32.getDevices()) {
-            if (device instanceof StateProvider provider) {
-                states.putAll(provider.getState());
+        for(Device device : esp32.getDevices()) {
+            if(device instanceof StateProvider provider) {
+                devices.add(
+                        new DeviceState(
+                                device.getId(),
+                                device.getType(),
+                                provider.getState()
+                        )
+                );
             }
         }
         return new Esp32State(
                 esp32.getId(),
                 esp32.getName(),
                 uptime,
-                states
+                devices
         );
     }
 

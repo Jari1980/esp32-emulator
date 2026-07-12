@@ -1,6 +1,7 @@
 package ESP32.Emulator.emulator;
 
 import ESP32.Emulator.command.TurnOnLedCommand;
+import ESP32.Emulator.device.DeviceState;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -13,11 +14,13 @@ public class Esp32EmulatorTest {
 
         service.execute(new TurnOnLedCommand("led-001"));
 
-        assertTrue(
-                service.getCurrentState()
-                        .deviceStates()
-                        .get("ledOn")
-                        .equals(true)
-        );
+        DeviceState ledState = service.getCurrentState()
+                .devices()
+                .stream()
+                .filter(device -> device.deviceId().equals("led-001"))
+                .findFirst()
+                .orElseThrow();
+
+        assertTrue((Boolean) ledState.state().get("ledOn"));
     }
 }
