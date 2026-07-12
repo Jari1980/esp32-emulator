@@ -74,4 +74,9 @@ public class MotionSensor implements Device, Updatable, StateProvider {
     public Map<String, Object> getState() {
         return Map.of("motionDetected", motionDetected);
     }
+
+    @Override
+    public String getType() {
+        return "motion";
+    }
 }

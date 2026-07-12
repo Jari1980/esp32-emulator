@@ -62,4 +62,9 @@ public class TemperatureSensor implements Device, Updatable, StateProvider {
                 temperature
         );
     }
+
+    @Override
+    public String getType() {
+        return "temperature";
+    }
 }

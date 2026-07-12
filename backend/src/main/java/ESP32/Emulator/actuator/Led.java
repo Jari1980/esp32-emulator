@@ -73,4 +73,8 @@ public class Led implements Device, StateProvider {
         );
     }
 
+    @Override
+    public String getType() {
+        return "led";
+    }
 }

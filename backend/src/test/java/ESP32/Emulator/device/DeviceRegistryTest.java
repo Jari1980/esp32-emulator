@@ -51,5 +51,10 @@ public class DeviceRegistryTest {
         public String getName() {
             return name;
         }
+
+        @Override
+        public String getType() {
+            return "test";
+        }
     }
 }
