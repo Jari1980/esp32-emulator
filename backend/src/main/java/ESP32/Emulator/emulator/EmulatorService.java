@@ -8,4 +8,5 @@ public interface EmulatorService {
     Esp32State getCurrentState();
     void execute(Command command);
     void subscribe(EventListener listener);
+    void publishState();
 }
