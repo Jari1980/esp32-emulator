@@ -42,6 +42,9 @@ public class Esp32Emulator implements EmulatorLifecycle{
         this.eventBus = eventBus;
         this.commandHandler = commandHandler;
         this.currentState = createState();
+        eventBus.subscribe(event -> {
+            currentState = createState();
+        });
     }
 
     public EventBus getEventBus() {
@@ -70,10 +73,6 @@ public class Esp32Emulator implements EmulatorLifecycle{
                 uptime,
                 states
         );
-    }
-
-    public CommandHandler getCommandHandler() {
-        return commandHandler;
     }
 
     public void execute(Command command) {
