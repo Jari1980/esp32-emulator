@@ -12,6 +12,11 @@
       "id": "led-001",
       "name": "Built-in LED",
       "gpio": 2
+    },
+    {
+      "type": "motion",
+      "id": "motion-001",
+      "name": "Motion Sensor"
     }
   ]
 }
