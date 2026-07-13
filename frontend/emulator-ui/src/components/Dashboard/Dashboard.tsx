@@ -1,4 +1,3 @@
-import Card from "../Card/Card";
 import "./Dashboard.css";
 import DeviceStatusCard from "../DeviceStatusCard/DeviceStatusCard";
 import CameraCard from "../CameraCard/CameraCard";
