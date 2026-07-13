@@ -5,22 +5,48 @@ import { WEBSOCKET_URL } from "../config/websocket";
 class WebSocketAdapter {
   private socket?: WebSocket;
   private status: ConnectionStatus = "DISCONNECTED";
+  private statusListener?: (status: ConnectionStatus) => void;
+  private reconnectTimer?: number;
+  private reconnectDelay = 3000;
+
+  setStatusListener(listener: (status: ConnectionStatus) => void) {
+    this.statusListener = listener;
+  }
+
+  private updateStatus(status: ConnectionStatus) {
+    this.status = status;
+    this.statusListener?.(status);
+  }
+
+  private scheduleReconnect() {
+    if (this.reconnectTimer) {
+      return;
+    }
+
+    this.reconnectTimer = window.setTimeout(() => {
+      this.reconnectTimer = undefined;
+
+      console.log("Attempting WebSocket reconnect...");
+
+      this.connect();
+    }, this.reconnectDelay);
+  }
 
   connect() {
-    this.status = "CONNECTING";
-
+    if (this.socket && this.status === "CONNECTED") {
+      return;
+    }
+    this.updateStatus("CONNECTING");
     this.socket = new WebSocket(WEBSOCKET_URL);
-
     this.socket.onopen = () => {
-      this.status = "CONNECTED";
-
+      this.updateStatus("CONNECTED");
       console.log("WebSocket connected");
     };
 
     this.socket.onclose = () => {
-      this.status = "DISCONNECTED";
-
+      this.updateStatus("DISCONNECTED");
       console.log("WebSocket disconnected");
+      this.scheduleReconnect();
     };
 
     this.socket.onerror = (error) => {
@@ -29,9 +55,13 @@ class WebSocketAdapter {
   }
 
   disconnect() {
-    this.status = "DISCONNECTED";
-
-    console.log("WebSocket disconnected");
+    if (this.reconnectTimer) {
+      clearTimeout(this.reconnectTimer);
+      this.reconnectTimer = undefined;
+    }
+    this.socket?.close();
+    this.socket = undefined;
+    this.updateStatus("DISCONNECTED");
   }
 
   getStatus() {
