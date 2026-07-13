@@ -4,11 +4,19 @@ function useTemperature() {
   const [temperature, setTemperature] = useState(22.4);
 
   const increase = () => {
-    setTemperature((value) => Number((value + 0.1).toFixed(1)));
+    const newTemperature = Number((temperature + 0.1).toFixed(1));
+
+    setTemperature(newTemperature);
+
+    return newTemperature;
   };
 
   const decrease = () => {
-    setTemperature((value) => Number((value - 0.1).toFixed(1)));
+    const newTemperature = Number((temperature - 0.1).toFixed(1));
+
+    setTemperature(newTemperature);
+
+    return newTemperature;
   };
 
   return {

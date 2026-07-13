@@ -8,24 +8,24 @@ function TemperatureControlCard() {
   const { temperature, increase, decrease } = useTemperature();
 
   const increaseTemperature = () => {
-    increase();
+    const newTemperature = increase();
 
     addEvent({
       deviceId: "temp-001",
       type: "TEMPERATURE_CHANGED",
-      value: temperature + 0.1,
-      message: "Temperature increased",
+      value: newTemperature,
+      message: `Temperature changed to ${newTemperature}°C`,
     });
   };
 
   const decreaseTemperature = () => {
-    decrease();
+    const newTemperature = decrease();
 
     addEvent({
       deviceId: "temp-001",
       type: "TEMPERATURE_CHANGED",
-      value: temperature - 0.1,
-      message: "Temperature decreased",
+      value: newTemperature,
+      message: `Temperature changed to ${newTemperature}°C`,
     });
   };
   return (
