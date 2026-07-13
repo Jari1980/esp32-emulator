@@ -1,0 +1,44 @@
+.light-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.light-control__state {
+  width: 80px;
+  height: 80px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #334155;
+
+  color: #cbd5e1;
+
+  font-weight: bold;
+}
+
+.light-control__button {
+  width: 100%;
+
+  padding: 0.75rem;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #22c55e;
+
+  color: white;
+
+  font-size: 1rem;
+
+  cursor: pointer;
+}
+
+.light-control__button:hover {
+  background: #16a34a;
+}

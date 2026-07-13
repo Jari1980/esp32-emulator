@@ -6,6 +6,10 @@
   margin: 0 auto;
 }
 
+.dashboard__full-width {
+  grid-column: 1 / -1;
+}
+
 @media (min-width: 768px) {
   .dashboard {
     grid-template-columns: repeat(2, 1fr);
