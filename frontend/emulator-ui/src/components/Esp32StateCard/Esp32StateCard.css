@@ -1,0 +1,18 @@
+.esp32-state {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.esp32-state div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.esp32-state span {
+  color: #64748b;
+}
+
+.esp32-state strong {
+  font-weight: 600;
+}

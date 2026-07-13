@@ -5,6 +5,7 @@ import TemperatureControlCard from "../TemperatureControlCard/TemperatureControl
 import MotionControlCard from "../MotionControlCard/MotionControlCard";
 import LightControlCard from "../LightControlCard/LightControlCard";
 import EventLog from "../EventLog/EventLog";
+import Esp32StateCard from "../Esp32StateCard/Esp32StateCard";
 
 function Dashboard() {
   return (
@@ -17,9 +18,9 @@ function Dashboard() {
 
       <MotionControlCard />
 
-      <div className="dashboard__full-width">
-        <LightControlCard />
-      </div>
+      <LightControlCard />
+
+      <Esp32StateCard />
 
       <div className="dashboard__full-width">
         <EventLog />
