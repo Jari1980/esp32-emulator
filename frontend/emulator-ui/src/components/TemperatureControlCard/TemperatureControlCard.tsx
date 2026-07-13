@@ -1,10 +1,19 @@
 import Card from "../Card/Card";
 import { useEsp32 } from "../../context/Esp32Context";
-
+import useDeviceCommand from "../../hooks/useDeviceCommand";
 import "./TemperatureControlCard.css";
 
 function TemperatureControlCard() {
   const { state } = useEsp32();
+  const { sendCommand } = useDeviceCommand();
+
+  const changeTemperature = (direction: "UP" | "DOWN") => {
+    sendCommand(
+      direction === "UP" ? "INCREASE_TEMPERATURE" : "DECREASE_TEMPERATURE",
+      "temp-001",
+    );
+  };
+
   const temperatureDevice = state.devices.find(
     (device) => device.deviceId === "temp-001",
   );
@@ -21,9 +30,9 @@ function TemperatureControlCard() {
         </div>
 
         <div className="temperature-control__buttons">
-          <button disabled>-</button>
+          <button onClick={() => changeTemperature("DOWN")}>-</button>
 
-          <button disabled>+</button>
+          <button onClick={() => changeTemperature("UP")}>+</button>
         </div>
       </div>
     </Card>
