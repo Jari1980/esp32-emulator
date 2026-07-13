@@ -1,9 +1,24 @@
 import Card from "../Card/Card";
 import useMotion from "../../hooks/useMotion";
+import { useEvents } from "../../context/EventContext";
 import "./MotionControlCard.css";
 
 function MotionControlCard() {
   const { motionDetected, triggerMotion, resetMotion } = useMotion();
+
+  const handleTriggerMotion = () => {
+    triggerMotion();
+
+    addEvent("Motion detected");
+  };
+
+  const handleResetMotion = () => {
+    resetMotion();
+
+    addEvent("Motion reset");
+  };
+
+  const { addEvent } = useEvents();
   return (
     <Card title="Motion Sensor">
       <div className="motion-control">
@@ -12,11 +27,17 @@ function MotionControlCard() {
         </div>
 
         {motionDetected ? (
-          <button className="motion-control__button" onClick={resetMotion}>
+          <button
+            className="motion-control__button"
+            onClick={handleResetMotion}
+          >
             Reset Motion
           </button>
         ) : (
-          <button className="motion-control__button" onClick={triggerMotion}>
+          <button
+            className="motion-control__button"
+            onClick={handleTriggerMotion}
+          >
             Trigger Motion
           </button>
         )}
