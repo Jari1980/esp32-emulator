@@ -1,5 +1,6 @@
 import Card from "../Card/Card";
 import "./Dashboard.css";
+import DeviceStatusCard from "../DeviceStatusCard/DeviceStatusCard";
 
 function Dashboard() {
   return (
@@ -9,10 +10,7 @@ function Dashboard() {
         <p>No signal</p>
       </Card>
 
-      <Card title="Device Status">
-        <p>ESP32 Emulator</p>
-        <p>Status: Offline</p>
-      </Card>
+      <DeviceStatusCard />
 
       <Card title="Sensors">
         <p>Temperature: -- °C</p>

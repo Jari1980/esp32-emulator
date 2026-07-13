@@ -1,0 +1,20 @@
+.device-status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.device-status__row {
+  display: flex;
+  justify-content: space-between;
+
+  color: #cbd5e1;
+}
+
+.device-status__row strong {
+  color: #f8fafc;
+}
+
+.device-status__online {
+  color: #22c55e !important;
+}
