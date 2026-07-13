@@ -1,13 +1,7 @@
-import Card from "./components/Card/Card";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 function App() {
-  return (
-    <main>
-      <Card title="Camera">
-        <p>No signal</p>
-      </Card>
-    </main>
-  );
+  return <Dashboard />;
 }
 
 export default App;
