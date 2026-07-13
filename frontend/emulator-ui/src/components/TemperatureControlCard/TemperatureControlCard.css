@@ -1,0 +1,35 @@
+.temperature-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.temperature-control__value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #f8fafc;
+}
+
+.temperature-control__buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.temperature-control button {
+  width: 48px;
+  height: 40px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #0ea5e9;
+  color: white;
+
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.temperature-control button:hover {
+  background: #0284c7;
+}
