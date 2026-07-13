@@ -10,12 +10,14 @@ type Esp32ContextType = {
   setMotion: (value: boolean) => void;
 
   setLed: (value: boolean) => void;
+
+  setSnapshot: (state: Esp32State) => void;
 };
 
 const Esp32Context = createContext<Esp32ContextType | undefined>(undefined);
 
 export function Esp32Provider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<Esp32State>({
+  const [state, updateState] = useState<Esp32State>({
     id: "esp32-001",
 
     temperature: 22.4,
@@ -24,23 +26,26 @@ export function Esp32Provider({ children }: { children: ReactNode }) {
 
     ledOn: false,
   });
+  const setSnapshot = (newState: Esp32State) => {
+    updateState(newState);
+  };
 
   const setTemperature = (value: number) => {
-    setState((current) => ({
+    updateState((current) => ({
       ...current,
       temperature: value,
     }));
   };
 
   const setMotion = (value: boolean) => {
-    setState((current) => ({
+    updateState((current) => ({
       ...current,
       motionDetected: value,
     }));
   };
 
   const setLed = (value: boolean) => {
-    setState((current) => ({
+    updateState((current) => ({
       ...current,
       ledOn: value,
     }));
@@ -56,6 +61,8 @@ export function Esp32Provider({ children }: { children: ReactNode }) {
         setMotion,
 
         setLed,
+
+        setSnapshot
       }}
     >
       {children}

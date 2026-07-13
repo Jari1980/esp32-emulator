@@ -8,6 +8,7 @@ class WebSocketAdapter {
   private statusListener?: (status: ConnectionStatus) => void;
   private reconnectTimer?: number;
   private reconnectDelay = 3000;
+  private messageListener?: (message: unknown) => void;
 
   setStatusListener(listener: (status: ConnectionStatus) => void) {
     this.statusListener = listener;
@@ -52,6 +53,16 @@ class WebSocketAdapter {
     this.socket.onerror = (error) => {
       console.error("WebSocket error", error);
     };
+
+    this.socket.onmessage = (event) => {
+      try {
+        const message = JSON.parse(event.data);
+        console.log("WebSocket message:", message);
+        this.messageListener?.(message);
+      } catch (error) {
+        console.error("Invalid WebSocket message", error);
+      }
+    };
   }
 
   disconnect() {
@@ -81,6 +92,10 @@ class WebSocketAdapter {
     };
 
     this.socket?.send(JSON.stringify(message));
+  }
+
+  setMessageListener(listener: (message: unknown) => void) {
+    this.messageListener = listener;
   }
 }
 
