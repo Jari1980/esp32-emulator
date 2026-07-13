@@ -11,6 +11,24 @@
   color: #f8fafc;
 }
 
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .header__brand {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .header__status {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
 .header__brand {
   display: flex;
   align-items: center;
@@ -18,12 +36,13 @@
 }
 
 .header__logo {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
 
   border-radius: 12px;
 
   object-fit: cover;
+  flex-shrink: 0;
 }
 
 .header h1 {
@@ -52,4 +71,12 @@
   border-radius: 50%;
 
   background: #ef4444;
+}
+
+.status-dot--offline {
+  background: #ef4444;
+}
+
+.status-dot--connected {
+  background: #22c55e;
 }

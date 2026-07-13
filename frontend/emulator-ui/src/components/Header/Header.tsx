@@ -14,7 +14,7 @@ function Header() {
       </div>
 
       <div className="header__status">
-        <span className="status-dot" />
+        <span className="status-dot status-dot--offline" />
         <span>Disconnected</span>
       </div>
     </header>
