@@ -1,34 +1,37 @@
 import Card from "../Card/Card";
-import useLight from "../../hooks/useLight";
+import { useEsp32 } from "../../context/Esp32Context";
 import { useEvents } from "../../context/EventContext";
 import "./LightControlCard.css";
 
 function LightControlCard() {
-  const { isOn, toggle } = useLight();
+  const { state, setLed } = useEsp32();
+
+  const { addEvent } = useEvents();
 
   const handleToggle = () => {
-    toggle();
+    const newState = !state.ledOn;
+
+    setLed(newState);
 
     addEvent({
       deviceId: "led-001",
       type: "LED_STATE_CHANGED",
-      value: !isOn,
-      message: !isOn ? "LED turned ON" : "LED turned OFF",
+      value: newState,
+      message: newState ? "LED turned ON" : "LED turned OFF",
     });
   };
 
-  const { addEvent } = useEvents();
   return (
     <Card title="Light / LED">
       <div className="light-control">
         <div
           className={
-            isOn
+            state.ledOn
               ? "light-control__state light-control__state--on"
               : "light-control__state"
           }
         >
-          {isOn ? "ON" : "OFF"}
+          {state.ledOn ? "ON" : "OFF"}
         </div>
 
         <button className="light-control__button" onClick={handleToggle}>
