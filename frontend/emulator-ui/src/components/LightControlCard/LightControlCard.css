@@ -42,3 +42,9 @@
 .light-control__button:hover {
   background: #16a34a;
 }
+
+.light-control__state--on {
+  background: #facc15;
+  color: #422006;
+  box-shadow: 0 0 20px #facc15;
+}
