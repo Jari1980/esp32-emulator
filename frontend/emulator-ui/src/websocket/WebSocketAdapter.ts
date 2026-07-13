@@ -97,6 +97,25 @@ class WebSocketAdapter {
   setMessageListener(listener: (message: unknown) => void) {
     this.messageListener = listener;
   }
+
+  sendCommand(command: string, deviceId: string) {
+    if (this.status !== "CONNECTED") {
+      console.log("Not connected, cannot send command");
+
+      return;
+    }
+
+    const message = {
+      type: "COMMAND",
+
+      payload: {
+        command,
+        deviceId,
+      },
+    };
+
+    this.socket?.send(JSON.stringify(message));
+  }
 }
 
 export default new WebSocketAdapter();
