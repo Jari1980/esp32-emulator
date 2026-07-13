@@ -9,7 +9,12 @@ function LightControlCard() {
   const handleToggle = () => {
     toggle();
 
-    addEvent(isOn ? "LED turned OFF" : "LED turned ON");
+    addEvent({
+      deviceId: "led-001",
+      type: "LED_STATE_CHANGED",
+      value: !isOn,
+      message: !isOn ? "LED turned ON" : "LED turned OFF",
+    });
   };
 
   const { addEvent } = useEvents();

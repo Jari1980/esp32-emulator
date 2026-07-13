@@ -1,41 +1,29 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
 
 import type { EmulatorEvent } from "../types/Event";
 
 type EventContextType = {
   events: EmulatorEvent[];
-  addEvent: (message: string) => void;
+
+  addEvent: (
+    eventData: Omit<EmulatorEvent, "id" | "timestamp">
+  ) => void;
 };
 
-const EventContext = createContext<EventContextType | undefined>(
-  undefined
-);
+const EventContext = createContext<EventContextType | undefined>(undefined);
 
-export function EventProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
-
+export function EventProvider({ children }: { children: ReactNode }) {
   const [events, setEvents] = useState<EmulatorEvent[]>([]);
 
-  const addEvent = (message: string) => {
-
+  const addEvent = (eventData: Omit<EmulatorEvent, "id" | "timestamp">) => {
     const event: EmulatorEvent = {
       id: Date.now(),
       timestamp: new Date().toLocaleTimeString(),
-      message,
+
+      ...eventData,
     };
 
-    setEvents((current) => [
-      event,
-      ...current,
-    ]);
+    setEvents((current) => [event, ...current]);
   };
 
   return (
@@ -50,15 +38,11 @@ export function EventProvider({
   );
 }
 
-
 export function useEvents() {
-
   const context = useContext(EventContext);
 
   if (!context) {
-    throw new Error(
-      "useEvents must be used inside EventProvider"
-    );
+    throw new Error("useEvents must be used inside EventProvider");
   }
 
   return context;

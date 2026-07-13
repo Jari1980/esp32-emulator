@@ -9,13 +9,23 @@ function MotionControlCard() {
   const handleTriggerMotion = () => {
     triggerMotion();
 
-    addEvent("Motion detected");
+    addEvent({
+      deviceId: "motion-001",
+      type: "MOTION_DETECTED",
+      value: true,
+      message: "Motion detected",
+    });
   };
 
   const handleResetMotion = () => {
     resetMotion();
 
-    addEvent("Motion reset");
+    addEvent({
+      deviceId: "motion-001",
+      type: "MOTION_RESET",
+      value: false,
+      message: "Motion reset",
+    });
   };
 
   const { addEvent } = useEvents();

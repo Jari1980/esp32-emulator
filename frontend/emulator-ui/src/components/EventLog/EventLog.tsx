@@ -11,7 +11,13 @@ function EventLog() {
           <div key={event.id} className="event-log__item">
             <span>{event.timestamp}</span>
 
-            <p>{event.message}</p>
+            <div>
+              <p>{event.message}</p>
+
+              <small>
+                {event.deviceId} · {event.type}
+              </small>
+            </div>
           </div>
         ))}
       </div>

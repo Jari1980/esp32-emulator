@@ -10,13 +10,23 @@ function TemperatureControlCard() {
   const increaseTemperature = () => {
     increase();
 
-    addEvent("Temperature increased");
+    addEvent({
+      deviceId: "temp-001",
+      type: "TEMPERATURE_CHANGED",
+      value: temperature + 0.1,
+      message: "Temperature increased",
+    });
   };
 
   const decreaseTemperature = () => {
     decrease();
 
-    addEvent("Temperature decreased");
+    addEvent({
+      deviceId: "temp-001",
+      type: "TEMPERATURE_CHANGED",
+      value: temperature - 0.1,
+      message: "Temperature decreased",
+    });
   };
   return (
     <Card title="Temperature Sensor">
