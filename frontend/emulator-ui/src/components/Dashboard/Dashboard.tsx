@@ -1,14 +1,13 @@
 import Card from "../Card/Card";
 import "./Dashboard.css";
 import DeviceStatusCard from "../DeviceStatusCard/DeviceStatusCard";
+import CameraCard from "../CameraCard/CameraCard";
 
 function Dashboard() {
   return (
     <div className="dashboard">
 
-      <Card title="Camera">
-        <p>No signal</p>
-      </Card>
+      <CameraCard />
 
       <DeviceStatusCard />
 
