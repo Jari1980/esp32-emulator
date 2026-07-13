@@ -1,9 +1,12 @@
+export type DeviceState = {
+  deviceId: string;
+  type: string;
+  state: Record<string, unknown>;
+};
+
 export type Esp32State = {
   id: string;
-
-  temperature: number;
-
-  motionDetected: boolean;
-
-  ledOn: boolean;
+  name: string;
+  uptime: number;
+  devices: DeviceState[];
 };

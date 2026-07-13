@@ -1,46 +1,29 @@
 import Card from "../Card/Card";
-import "./TemperatureControlCard.css";
-import { useEvents } from "../../context/EventContext";
 import { useEsp32 } from "../../context/Esp32Context";
 
+import "./TemperatureControlCard.css";
+
 function TemperatureControlCard() {
-  const { addEvent } = useEvents();
-  const { state, setTemperature } = useEsp32();
+  const { state } = useEsp32();
+  const temperatureDevice = state.devices.find(
+    (device) => device.deviceId === "temp-001",
+  );
 
-  const increaseTemperature = () => {
-    const newTemperature = Number((state.temperature + 0.1).toFixed(1));
+  const temperature = temperatureDevice?.state.temperature as
+    | number
+    | undefined;
 
-    setTemperature(newTemperature);
-
-    addEvent({
-      deviceId: "temp-001",
-      type: "TEMPERATURE_CHANGED",
-      value: newTemperature,
-      message: `Temperature changed to ${newTemperature}°C`,
-    });
-  };
-
-  const decreaseTemperature = () => {
-    const newTemperature = Number((state.temperature - 0.1).toFixed(1));
-
-    setTemperature(newTemperature);
-
-    addEvent({
-      deviceId: "temp-001",
-      type: "TEMPERATURE_CHANGED",
-      value: newTemperature,
-      message: `Temperature changed to ${newTemperature}°C`,
-    });
-  };
   return (
     <Card title="Temperature Sensor">
       <div className="temperature-control">
-        <div className="temperature-control__value">{state.temperature} °C</div>
+        <div className="temperature-control__value">
+          {temperature !== undefined ? `${temperature} °C` : "-"}
+        </div>
 
         <div className="temperature-control__buttons">
-          <button onClick={decreaseTemperature}>-</button>
+          <button disabled>-</button>
 
-          <button onClick={increaseTemperature}>+</button>
+          <button disabled>+</button>
         </div>
       </div>
     </Card>
