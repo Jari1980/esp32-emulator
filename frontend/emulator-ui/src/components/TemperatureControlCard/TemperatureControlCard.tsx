@@ -1,14 +1,16 @@
 import Card from "../Card/Card";
 import "./TemperatureControlCard.css";
-import useTemperature from "../../hooks/useTemperature";
 import { useEvents } from "../../context/EventContext";
+import { useEsp32 } from "../../context/Esp32Context";
 
 function TemperatureControlCard() {
   const { addEvent } = useEvents();
-  const { temperature, increase, decrease } = useTemperature();
+  const { state, setTemperature } = useEsp32();
 
   const increaseTemperature = () => {
-    const newTemperature = increase();
+    const newTemperature = Number((state.temperature + 0.1).toFixed(1));
+
+    setTemperature(newTemperature);
 
     addEvent({
       deviceId: "temp-001",
@@ -19,7 +21,9 @@ function TemperatureControlCard() {
   };
 
   const decreaseTemperature = () => {
-    const newTemperature = decrease();
+    const newTemperature = Number((state.temperature - 0.1).toFixed(1));
+
+    setTemperature(newTemperature);
 
     addEvent({
       deviceId: "temp-001",
@@ -31,7 +35,7 @@ function TemperatureControlCard() {
   return (
     <Card title="Temperature Sensor">
       <div className="temperature-control">
-        <div className="temperature-control__value">{temperature} °C</div>
+        <div className="temperature-control__value">{state.temperature} °C</div>
 
         <div className="temperature-control__buttons">
           <button onClick={decreaseTemperature}>-</button>
