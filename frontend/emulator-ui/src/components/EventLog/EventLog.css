@@ -1,0 +1,32 @@
+.event-log {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.event-log__item {
+  display: flex;
+  gap: 1rem;
+
+  padding: 0.75rem;
+
+  background: #0f172a;
+  border-radius: 8px;
+
+  border: 1px solid #334155;
+}
+
+.event-log__item span {
+  color: #64748b;
+  font-size: 0.85rem;
+
+  white-space: nowrap;
+}
+
+.event-log__item p {
+  margin: 0;
+  color: #cbd5e1;
+}

@@ -5,6 +5,7 @@ import CameraCard from "../CameraCard/CameraCard";
 import TemperatureControlCard from "../TemperatureControlCard/TemperatureControlCard";
 import MotionControlCard from "../MotionControlCard/MotionControlCard";
 import LightControlCard from "../LightControlCard/LightControlCard";
+import EventLog from "../EventLog/EventLog";
 
 function Dashboard() {
   return (
@@ -22,9 +23,7 @@ function Dashboard() {
       </div>
 
       <div className="dashboard__full-width">
-        <Card title="Event Log">
-          <p>No events</p>
-        </Card>
+        <EventLog />
       </div>
     </div>
   );
