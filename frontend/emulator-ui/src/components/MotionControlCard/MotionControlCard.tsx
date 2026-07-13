@@ -1,13 +1,15 @@
 import Card from "../Card/Card";
-import useMotion from "../../hooks/useMotion";
+import { useEsp32 } from "../../context/Esp32Context";
 import { useEvents } from "../../context/EventContext";
 import "./MotionControlCard.css";
 
 function MotionControlCard() {
-  const { motionDetected, triggerMotion, resetMotion } = useMotion();
+  const { state, setMotion } = useEsp32();
+
+  const { addEvent } = useEvents();
 
   const handleTriggerMotion = () => {
-    triggerMotion();
+    setMotion(true);
 
     addEvent({
       deviceId: "motion-001",
@@ -18,7 +20,7 @@ function MotionControlCard() {
   };
 
   const handleResetMotion = () => {
-    resetMotion();
+    setMotion(false);
 
     addEvent({
       deviceId: "motion-001",
@@ -28,15 +30,14 @@ function MotionControlCard() {
     });
   };
 
-  const { addEvent } = useEvents();
   return (
     <Card title="Motion Sensor">
       <div className="motion-control">
         <div className="motion-control__state">
-          {motionDetected ? "Motion detected" : "No movement"}
+          {state.motionDetected ? "Motion detected" : "No movement"}
         </div>
 
-        {motionDetected ? (
+        {state.motionDetected ? (
           <button
             className="motion-control__button"
             onClick={handleResetMotion}
