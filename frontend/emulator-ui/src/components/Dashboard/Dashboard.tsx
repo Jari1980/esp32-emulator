@@ -3,6 +3,7 @@ import "./Dashboard.css";
 import DeviceStatusCard from "../DeviceStatusCard/DeviceStatusCard";
 import CameraCard from "../CameraCard/CameraCard";
 import TemperatureControlCard from "../TemperatureControlCard/TemperatureControlCard";
+import MotionControlCard from "../MotionControlCard/MotionControlCard";
 
 function Dashboard() {
   return (
@@ -14,10 +15,7 @@ function Dashboard() {
 
       <TemperatureControlCard />
 
-      <Card title="Controls">
-        <p>Light: OFF</p>
-        <button>Turn ON</button>
-      </Card>
+      <MotionControlCard />
 
       <Card title="Event Log">
         <p>No events</p>

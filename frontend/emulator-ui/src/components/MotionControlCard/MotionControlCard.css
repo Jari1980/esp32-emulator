@@ -1,0 +1,33 @@
+.motion-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.motion-control__state {
+  font-size: 1.2rem;
+  font-weight: 600;
+
+  color: #22c55e;
+}
+
+.motion-control__button {
+  width: 100%;
+
+  padding: 0.75rem;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #f97316;
+  color: white;
+
+  font-size: 1rem;
+
+  cursor: pointer;
+}
+
+.motion-control__button:hover {
+  background: #ea580c;
+}
