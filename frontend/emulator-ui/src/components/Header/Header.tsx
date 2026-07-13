@@ -1,7 +1,9 @@
 import "./Header.css";
 import logo from "../../assets/logo.png";
+import useWebSocketStatus from "../../hooks/useWebsocketStatus";
 
 function Header() {
+  const { status } = useWebSocketStatus();
   return (
     <header className="header">
       <div className="header__brand">
@@ -14,8 +16,15 @@ function Header() {
       </div>
 
       <div className="header__status">
-        <span className="status-dot status-dot--offline" />
-        <span>Disconnected</span>
+        <span
+          className={
+            status === "CONNECTED"
+              ? "status-dot status-dot--online"
+              : "status-dot status-dot--offline"
+          }
+        />
+
+        <span>{status === "CONNECTED" ? "Connected" : "Disconnected"}</span>
       </div>
     </header>
   );
