@@ -1,7 +1,11 @@
+import Card from "./components/Card/Card";
+
 function App() {
   return (
     <main>
-      <h1>ESP32 Emulator</h1>
+      <Card title="Camera">
+        <p>No signal</p>
+      </Card>
     </main>
   );
 }
