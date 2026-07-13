@@ -1,13 +1,11 @@
 import Card from "../Card/Card";
 import { useEsp32 } from "../../context/Esp32Context";
 import { mapToSnapshot } from "../../mapper/stateMapper";
-import useEsp32Publisher from "../../hooks/useEsp32Publisher";
 import "./Esp32StateCard.css";
 
 function Esp32StateCard() {
   const { state } = useEsp32();
   const snapshot = mapToSnapshot(state);
-  const { publishState } = useEsp32Publisher();
 
   return (
     <Card title="ESP32 State">
@@ -31,7 +29,6 @@ function Esp32StateCard() {
           <span>LED</span>
           <strong>{snapshot.ledOn ? "ON" : "OFF"}</strong>
         </div>
-        <button onClick={publishState}>Send WebSocket State</button>
         <pre className="esp32-state__json">
           {JSON.stringify(snapshot, null, 2)}
         </pre>
