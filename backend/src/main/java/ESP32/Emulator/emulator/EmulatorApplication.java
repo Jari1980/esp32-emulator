@@ -21,7 +21,8 @@ public class EmulatorApplication {
         CommandMapper commandMapper = new CommandMapper();
         MqttStatePublisher mqttPublisher = new MqttStatePublisher(
                 "tcp://localhost:1883",
-                "esp32-emulator"
+                "esp32-emulator",
+                "esp32-001"
         );
 
         EmulatorWebSocketServer websocket =

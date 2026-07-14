@@ -11,14 +11,14 @@ import java.nio.charset.StandardCharsets;
 public class MqttStatePublisher implements StatePublisher{
     private final MqttClient client;
     private final ObjectMapper mapper;
+    private final String topic;
 
-    private final String topic = "home/esp32/state";
-
-    public MqttStatePublisher(String broker, String clientId) {
+    public MqttStatePublisher(String broker, String clientId, String deviceId) {
 
         try {
             this.client = new MqttClient(broker, clientId);
             this.client.connect();
+            this.topic = "home/esp32/" + deviceId + "/state";
             this.mapper = new ObjectMapper();
 
         } catch (MqttException e) {
