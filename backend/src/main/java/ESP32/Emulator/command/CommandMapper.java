@@ -9,6 +9,10 @@ public class CommandMapper {
                     new TurnOnLedCommand(message.deviceId());
             case "TURN_OFF" ->
                     new TurnOffLedCommand(message.deviceId());
+            case "TRIGGER_MOTION" ->
+                    new TriggerMotionCommand(message.deviceId());
+            case "RESET_MOTION" ->
+                    new ResetMotionCommand(message.deviceId());
             default ->
                     throw new IllegalArgumentException(
                             "Unknown command: " + message.command()
