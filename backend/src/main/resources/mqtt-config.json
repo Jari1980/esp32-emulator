@@ -1,0 +1,4 @@
+{
+  "broker": "tcp://localhost:1883",
+  "clientId": "esp32-emulator"
+}

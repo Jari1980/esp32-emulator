@@ -1,6 +1,7 @@
-package ESP32.Emulator.publisher;
+package ESP32.Emulator.mqtt;
 
 import ESP32.Emulator.dto.Esp32StateDto;
+import ESP32.Emulator.publisher.StatePublisher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -8,7 +9,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.nio.charset.StandardCharsets;
 
-public class MqttStatePublisher implements StatePublisher{
+public class MqttStatePublisher implements StatePublisher {
     private final MqttClient client;
     private final ObjectMapper mapper;
     private final String topic;

@@ -1,6 +1,5 @@
 package ESP32.Emulator.emulator;
 
-import ESP32.Emulator.actuator.Led;
 import ESP32.Emulator.command.CommandHandler;
 import ESP32.Emulator.command.CommandMapper;
 import ESP32.Emulator.command.TurnOnLedCommand;
@@ -8,8 +7,9 @@ import ESP32.Emulator.listener.StateChangeListener;
 import ESP32.Emulator.mapper.StateMapper;
 import ESP32.Emulator.message.StateMessage;
 import ESP32.Emulator.mqtt.MqttCommandListener;
-import ESP32.Emulator.publisher.ConsoleStatePublisher;
-import ESP32.Emulator.publisher.MqttStatePublisher;
+import ESP32.Emulator.mqtt.MqttConfiguration;
+import ESP32.Emulator.mqtt.MqttConfigurationLoader;
+import ESP32.Emulator.mqtt.MqttStatePublisher;
 import ESP32.Emulator.publisher.WebSocketStatePublisher;
 import ESP32.Emulator.sensor.TemperatureSensor;
 import ESP32.Emulator.websocket.EmulatorWebSocketServer;
@@ -21,11 +21,12 @@ public class EmulatorApplication {
         Esp32Emulator emulator = new EmulatorBootstrap().create();
         ObjectMapper mapper = new ObjectMapper();
         CommandMapper commandMapper = new CommandMapper();
+        MqttConfiguration mqttConfiguration = new MqttConfigurationLoader().load();
 
         MqttCommandListener commandListener =
                 new MqttCommandListener(
-                        "tcp://localhost:1883",
-                        "esp32-command-listener",
+                        mqttConfiguration.broker(),
+                        mqttConfiguration.clientId() + "-listener",
                         emulator.getEsp32().getId(),
                         commandMapper,
                         new CommandHandler(
@@ -34,9 +35,9 @@ public class EmulatorApplication {
                 );
 
         MqttStatePublisher mqttPublisher = new MqttStatePublisher(
-                "tcp://localhost:1883",
-                "esp32-emulator",
-                "esp32-001"
+                mqttConfiguration.broker(),
+                mqttConfiguration.clientId(),
+                emulator.getEsp32().getId()
         );
 
         EmulatorWebSocketServer websocket =
@@ -82,12 +83,5 @@ public class EmulatorApplication {
                         )
                 );
 
-        // test actions
-        TemperatureSensor temperatureSensor = (TemperatureSensor) emulator.getEsp32().getDevice("temp-001");
-
-        temperatureSensor.setTemperature(25.5);
-
-
-        service.execute(new TurnOnLedCommand("led-001"));
     }
 }
