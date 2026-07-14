@@ -13,6 +13,11 @@ public class CommandMapper {
                     new TriggerMotionCommand(message.deviceId());
             case "RESET_MOTION" ->
                     new ResetMotionCommand(message.deviceId());
+            case "INCREASE_TEMPERATURE" ->
+                    new IncreaseTemperatureCommand(message.deviceId());
+
+            case "DECREASE_TEMPERATURE" ->
+                    new DecreaseTemperatureCommand(message.deviceId());
             default ->
                     throw new IllegalArgumentException(
                             "Unknown command: " + message.command()
