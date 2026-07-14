@@ -1,5 +1,11 @@
 package ESP32.Emulator.websocket;
 
+import ESP32.Emulator.command.Command;
+import ESP32.Emulator.command.CommandMapper;
+import ESP32.Emulator.emulator.Esp32Emulator;
+import ESP32.Emulator.message.CommandEnvelope;
+import ESP32.Emulator.message.CommandMessage;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -12,10 +18,18 @@ import java.util.function.Supplier;
 public class EmulatorWebSocketServer extends WebSocketServer {
     private final Set<WebSocket> clients = new CopyOnWriteArraySet<>();
     private final Supplier<String> stateSupplier;
+    private final CommandMapper commandMapper;
+    private final Esp32Emulator emulator;
+    private final ObjectMapper objectMapper;
 
-    public EmulatorWebSocketServer(int port, Supplier<String> stateSupplier) {
+    public EmulatorWebSocketServer(int port, Supplier<String> stateSupplier,
+                                   CommandMapper commandMapper, Esp32Emulator emulator,
+                                   ObjectMapper objectMapper) {
         super(new InetSocketAddress(port));
         this.stateSupplier = stateSupplier;
+        this.commandMapper = commandMapper;
+        this.emulator = emulator;
+        this.objectMapper = objectMapper;
     }
 
     public void broadcast(String message) {
@@ -39,7 +53,15 @@ public class EmulatorWebSocketServer extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket connection, String message) {
-        System.out.println("MESSAGE: " + message);
+        try {
+            CommandEnvelope envelope = objectMapper.readValue(message, CommandEnvelope.class);
+            Command command = commandMapper.map(envelope.payload());
+            emulator.execute(command);
+            broadcast(stateSupplier.get());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

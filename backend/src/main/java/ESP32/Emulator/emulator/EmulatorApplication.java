@@ -1,6 +1,7 @@
 package ESP32.Emulator.emulator;
 
 import ESP32.Emulator.actuator.Led;
+import ESP32.Emulator.command.CommandMapper;
 import ESP32.Emulator.command.TurnOnLedCommand;
 import ESP32.Emulator.listener.StateChangeListener;
 import ESP32.Emulator.mapper.StateMapper;
@@ -16,20 +17,27 @@ public class EmulatorApplication {
     public static void main(String[] args) {
         Esp32Emulator emulator = new EmulatorBootstrap().create();
         ObjectMapper mapper = new ObjectMapper();
+        CommandMapper commandMapper = new CommandMapper();
 
         EmulatorWebSocketServer websocket =
-                new EmulatorWebSocketServer(8080,
+                new EmulatorWebSocketServer(
+                        8080,
                         () -> {
-                    try {
-                        return mapper.writeValueAsString(
-                                new StateMessage(
-                                        new StateMapper().map(emulator.getCurrentState())
-                                )
-                        );
-                    } catch (Exception e) {
+                            try {
+                                return mapper.writeValueAsString(
+                                        new StateMessage(
+                                                new StateMapper()
+                                                        .map(emulator.getCurrentState())
+                                        )
+                                );
+                            } catch (Exception e) {
                                 throw new RuntimeException(e);
-                    }
-                });
+                            }
+                        },
+                        commandMapper,
+                        emulator,
+                        mapper
+                );
 
         websocket.start();
 
