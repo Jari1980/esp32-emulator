@@ -7,6 +7,8 @@ public class CommandMapper {
         return switch (message.command()) {
             case "TURN_ON" ->
                     new TurnOnLedCommand(message.deviceId());
+            case "TURN_OFF" ->
+                    new TurnOffLedCommand(message.deviceId());
             default ->
                     throw new IllegalArgumentException(
                             "Unknown command: " + message.command()
