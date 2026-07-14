@@ -7,6 +7,7 @@ import ESP32.Emulator.listener.StateChangeListener;
 import ESP32.Emulator.mapper.StateMapper;
 import ESP32.Emulator.message.StateMessage;
 import ESP32.Emulator.publisher.ConsoleStatePublisher;
+import ESP32.Emulator.publisher.MqttStatePublisher;
 import ESP32.Emulator.publisher.WebSocketStatePublisher;
 import ESP32.Emulator.sensor.TemperatureSensor;
 import ESP32.Emulator.websocket.EmulatorWebSocketServer;
@@ -18,6 +19,10 @@ public class EmulatorApplication {
         Esp32Emulator emulator = new EmulatorBootstrap().create();
         ObjectMapper mapper = new ObjectMapper();
         CommandMapper commandMapper = new CommandMapper();
+        MqttStatePublisher mqttPublisher = new MqttStatePublisher(
+                "tcp://localhost:1883",
+                "esp32-emulator"
+        );
 
         EmulatorWebSocketServer websocket =
                 new EmulatorWebSocketServer(
@@ -50,6 +55,15 @@ public class EmulatorApplication {
                         new StateChangeListener(
                                 emulator,
                                 publisher
+                        )
+                );
+
+        //Testing mqtt
+        emulator.getEventBus()
+                .subscribe(
+                        new StateChangeListener(
+                                emulator,
+                                mqttPublisher
                         )
                 );
 
