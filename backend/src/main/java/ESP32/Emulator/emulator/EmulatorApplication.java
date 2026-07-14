@@ -26,7 +26,7 @@ public class EmulatorApplication {
                 new MqttCommandListener(
                         "tcp://localhost:1883",
                         "esp32-command-listener",
-                        "esp32-001",
+                        emulator.getEsp32().getId(),
                         commandMapper,
                         new CommandHandler(
                                 emulator.getEsp32().getDeviceRegistry()

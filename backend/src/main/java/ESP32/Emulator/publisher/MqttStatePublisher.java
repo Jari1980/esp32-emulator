@@ -17,9 +17,9 @@ public class MqttStatePublisher implements StatePublisher{
 
         try {
             this.client = new MqttClient(broker, clientId);
-            this.client.connect();
-            this.topic = "home/esp32/" + deviceId + "/state";
             this.mapper = new ObjectMapper();
+            this.topic = "home/esp32/" + deviceId + "/state";
+            client.connect();
 
         } catch (MqttException e) {
             throw new RuntimeException(e);
