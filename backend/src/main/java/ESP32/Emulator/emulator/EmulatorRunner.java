@@ -10,19 +10,22 @@ public class EmulatorRunner {
 
 
     public void start() {
-        emulator.setup();
+        Thread thread = new Thread(() -> {
+            emulator.setup();
 
-        while (true) {
-            emulator.loop();
-            System.out.println(emulator.getCurrentState());
-            try {
-                Thread.sleep(1000);
+            while (!Thread.currentThread().isInterrupted()) {
+                emulator.loop();
+                try {
+                    Thread.sleep(1000);
+                }
+                catch (InterruptedException e) {
+                    Thread.currentThread()
+                            .interrupt();
+                }
             }
-            catch (InterruptedException e) {
-                Thread.currentThread()
-                        .interrupt();
-                break;
-            }
-        }
+        });
+
+        thread.setName("esp32-loop");
+        thread.start();
     }
 }

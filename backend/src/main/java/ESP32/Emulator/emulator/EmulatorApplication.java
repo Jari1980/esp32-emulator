@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class EmulatorApplication {
     public static void main(String[] args) {
         Esp32Emulator emulator = new EmulatorBootstrap().create();
+        EmulatorRunner runner = new EmulatorRunner(emulator);
+        runner.start();
         ObjectMapper mapper = new ObjectMapper();
         CommandMapper commandMapper = new CommandMapper();
         MqttConfiguration mqttConfiguration = new MqttConfigurationLoader().load();
