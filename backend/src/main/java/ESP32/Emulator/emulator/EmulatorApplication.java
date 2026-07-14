@@ -1,11 +1,13 @@
 package ESP32.Emulator.emulator;
 
 import ESP32.Emulator.actuator.Led;
+import ESP32.Emulator.command.CommandHandler;
 import ESP32.Emulator.command.CommandMapper;
 import ESP32.Emulator.command.TurnOnLedCommand;
 import ESP32.Emulator.listener.StateChangeListener;
 import ESP32.Emulator.mapper.StateMapper;
 import ESP32.Emulator.message.StateMessage;
+import ESP32.Emulator.mqtt.MqttCommandListener;
 import ESP32.Emulator.publisher.ConsoleStatePublisher;
 import ESP32.Emulator.publisher.MqttStatePublisher;
 import ESP32.Emulator.publisher.WebSocketStatePublisher;
@@ -19,6 +21,18 @@ public class EmulatorApplication {
         Esp32Emulator emulator = new EmulatorBootstrap().create();
         ObjectMapper mapper = new ObjectMapper();
         CommandMapper commandMapper = new CommandMapper();
+
+        MqttCommandListener commandListener =
+                new MqttCommandListener(
+                        "tcp://localhost:1883",
+                        "esp32-command-listener",
+                        "esp32-001",
+                        commandMapper,
+                        new CommandHandler(
+                                emulator.getEsp32().getDeviceRegistry()
+                        )
+                );
+
         MqttStatePublisher mqttPublisher = new MqttStatePublisher(
                 "tcp://localhost:1883",
                 "esp32-emulator",
