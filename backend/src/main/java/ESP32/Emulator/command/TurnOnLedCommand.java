@@ -17,7 +17,11 @@ public class TurnOnLedCommand implements Command{
 
     @Override
     public void execute(Device device) {
-        Led led = (Led) device;
+        if (!(device instanceof Led led)) {
+            throw new IllegalArgumentException(
+                    "Device is not an LED: " + device.getId()
+            );
+        }
         led.turnOn();
     }
 }

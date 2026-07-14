@@ -1,6 +1,7 @@
 package ESP32.Emulator.command;
 
 import ESP32.Emulator.device.Device;
+import ESP32.Emulator.sensor.MotionSensor;
 import ESP32.Emulator.sensor.TemperatureSensor;
 
 public class IncreaseTemperatureCommand implements Command{
@@ -17,10 +18,12 @@ public class IncreaseTemperatureCommand implements Command{
 
     @Override
     public void execute(Device device) {
-        TemperatureSensor sensor = (TemperatureSensor) device;
+        if (!(device instanceof TemperatureSensor sensor)) {
+            throw new IllegalArgumentException(
+                    "Device is not an temperature sensor: " + device.getId()
+            );
+        }
 
-        sensor.setTemperature(
-                sensor.getTemperature() + 0.5
-        );
+        sensor.setTemperature(sensor.getTemperature() + 0.5);
     }
 }

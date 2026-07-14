@@ -17,10 +17,12 @@ public class DecreaseTemperatureCommand implements Command{
 
     @Override
     public void execute(Device device) {
-        TemperatureSensor sensor = (TemperatureSensor) device;
+        if (!(device instanceof TemperatureSensor sensor)) {
+            throw new IllegalArgumentException(
+                    "Device is not an temperature sensor: " + device.getId()
+            );
+        }
 
-        sensor.setTemperature(
-                sensor.getTemperature() - 0.5
-        );
+        sensor.setTemperature(sensor.getTemperature() - 0.5);
     }
 }

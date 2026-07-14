@@ -15,6 +15,10 @@ public class CommandHandler {
 
     public void execute(Command command) {
         Device device = registry.get(command.getDeviceId());
+
+        if (device == null) {
+            throw new IllegalArgumentException("Unknown device: " + command.getDeviceId());
+        }
         command.execute(device);
     }
 }

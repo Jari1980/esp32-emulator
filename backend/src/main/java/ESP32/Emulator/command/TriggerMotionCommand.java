@@ -17,7 +17,11 @@ public class TriggerMotionCommand implements Command{
 
     @Override
     public void execute(Device device) {
-        MotionSensor sensor = (MotionSensor) device;
+        if (!(device instanceof MotionSensor sensor)) {
+            throw new IllegalArgumentException(
+                    "Device is not an motion sensor: " + device.getId()
+            );
+        }
         sensor.triggerMotion();
     }
 }
