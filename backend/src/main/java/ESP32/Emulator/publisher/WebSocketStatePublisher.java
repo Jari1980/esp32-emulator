@@ -18,7 +18,7 @@ public class WebSocketStatePublisher implements StatePublisher{
     public void publish(Esp32StateDto state) {
         try {
             StateMessage message = new StateMessage(state);
-            String json = mapper.writeValueAsString(state);
+            String json = mapper.writeValueAsString(message);
             server.broadcast(json);
         } catch (Exception e) {
             throw new RuntimeException(e);
