@@ -22,6 +22,16 @@ public class MqttClientService {
 
             client.connect(options);
 
+            client.subscribe("home/esp32/+/state", (topic, message) -> {
+
+                String payload = new String(message.getPayload());
+
+                System.out.println("MQTT MESSAGE");
+                System.out.println("Topic: " + topic);
+                System.out.println("Payload: " + payload);
+
+            });
+
             System.out.println("Connected to MQTT broker");
 
         } catch (Exception e) {
