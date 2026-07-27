@@ -38,4 +38,29 @@ public class MqttClientService {
             throw new RuntimeException(e);
         }
     }
+
+    public void sendCommand(String deviceId, String command) {
+
+        try {
+            String payload = """
+                {
+                  "command": "%s",
+                  "deviceId": "%s"
+                }
+                """.formatted(command, deviceId);
+
+            client.publish(
+                    "home/esp32/esp32-001/command",
+                    payload.getBytes(),
+                    0,
+                    false
+            );
+
+            System.out.println("Command sent:");
+            System.out.println(payload);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
