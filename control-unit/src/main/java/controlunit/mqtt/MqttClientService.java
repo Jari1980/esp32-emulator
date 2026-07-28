@@ -70,4 +70,22 @@ public class MqttClientService {
             throw new RuntimeException(e);
         }
     }
+
+    public void publishCommand(String payload) {
+
+        try {
+            client.publish(
+                    "home/esp32/esp32-001/command",
+                    payload.getBytes(),
+                    0,
+                    false
+            );
+
+            System.out.println("MQTT COMMAND SENT:");
+            System.out.println(payload);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
