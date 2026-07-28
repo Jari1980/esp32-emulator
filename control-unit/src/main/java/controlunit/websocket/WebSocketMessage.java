@@ -2,13 +2,13 @@ package controlunit.websocket;
 
 public class WebSocketMessage {
     private String type;
-    private String payload;
+    private Object payload;
 
     public String getType() {
         return type;
     }
 
-    public String getPayload() {
+    public Object getPayload() {
         return payload;
     }
 }

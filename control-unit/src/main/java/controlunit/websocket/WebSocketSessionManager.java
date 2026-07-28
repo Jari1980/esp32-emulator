@@ -3,6 +3,7 @@ package controlunit.websocket;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -10,6 +11,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 @Component
 public class WebSocketSessionManager {
     private final Set<WebSocketSession> sessions = new CopyOnWriteArraySet<>();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public void addSession(WebSocketSession session) {
         sessions.add(session);
@@ -23,15 +25,23 @@ public class WebSocketSessionManager {
         return sessions;
     }
 
-    public void broadcast(String message) {
+    public void broadcast(String payload) {
 
-        for (WebSocketSession session : sessions) {
+        sessions.forEach(session -> {
             try {
+                String message = """
+                {
+                  "type":"STATE",
+                  "payload":%s
+                }
+                """.formatted(payload);
+
                 session.sendMessage(new TextMessage(message));
+
             } catch (Exception e) {
-                System.err.println("Failed to send websocket message");
-                sessions.remove(session);
+                e.printStackTrace();
             }
-        }
+
+        });
     }
 }
