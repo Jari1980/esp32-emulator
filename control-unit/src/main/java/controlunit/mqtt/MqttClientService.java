@@ -1,5 +1,6 @@
 package controlunit.mqtt;
 
+import controlunit.websocket.WebSocketSessionManager;
 import jakarta.annotation.PostConstruct;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -9,6 +10,11 @@ import org.springframework.stereotype.Component;
 public class MqttClientService {
     private static final String BROKER = "tcp://localhost:1883";
     private MqttClient client;
+    private final WebSocketSessionManager sessionManager;
+
+    public MqttClientService(WebSocketSessionManager sessionManager) {
+        this.sessionManager = sessionManager;
+    }
 
     @PostConstruct
     public void connect() {
@@ -30,6 +36,7 @@ public class MqttClientService {
                 System.out.println("Topic: " + topic);
                 System.out.println("Payload: " + payload);
 
+                sessionManager.broadcast(payload);
             });
 
             System.out.println("Connected to MQTT broker");
