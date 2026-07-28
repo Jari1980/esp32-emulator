@@ -6,11 +6,13 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import tools.jackson.databind.ObjectMapper;
 
 @Component
 public class StateWebSocketHandler extends TextWebSocketHandler {
     private final WebSocketSessionManager sessionManager;
     private final MqttClientService mqttClientService;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public StateWebSocketHandler(WebSocketSessionManager sessionManager, MqttClientService mqttClientService) {
         this.sessionManager = sessionManager;
@@ -35,11 +37,20 @@ public class StateWebSocketHandler extends TextWebSocketHandler {
             TextMessage message
     ) {
 
-        String payload = message.getPayload();
+        try {
+            WebSocketMessage wsMessage = objectMapper.readValue(message.getPayload(), WebSocketMessage.class);
 
-        System.out.println("WEBSOCKET MESSAGE");
-        System.out.println(payload);
+            System.out.println("WEBSOCKET MESSAGE TYPE:");
+            System.out.println(wsMessage.getType());
 
-        mqttClientService.publishCommand(payload);
+            if ("COMMAND".equals(wsMessage.getType())) {
+                String payload = objectMapper.writeValueAsString(wsMessage.getPayload());
+
+                mqttClientService.publishCommand(payload);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
