@@ -1,12 +1,15 @@
 import { Card } from "../Card/Card";
+import "./CameraCard.css";
 
 export function CameraCard() {
   return (
-    <Card title="Surveillance Camera">
-      <div className="camera-placeholder">
-        <p>Camera not connected</p>
+    <Card title="Camera">
+      <div className="camera">
+        <div className="camera__preview">
+          <div className="camera__status">No signal</div>
+        </div>
 
-        <span>No signal</span>
+        <button className="camera__button">Open fullscreen</button>
       </div>
     </Card>
   );
