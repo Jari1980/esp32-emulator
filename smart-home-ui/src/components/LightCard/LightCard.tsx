@@ -1,10 +1,13 @@
 import type { DeviceState } from "../../types/DeviceState";
+import { useSmartHome } from "../../context/SmartHomeContext";
 
 interface Props {
   device: DeviceState;
 }
 
 export function LightCard({ device }: Props) {
+  const { sendCommand } = useSmartHome();
+
   const ledOn = device.state.ledOn as boolean;
 
   return (
@@ -12,6 +15,14 @@ export function LightCard({ device }: Props) {
       <h2>Light</h2>
 
       <p>{ledOn ? "ON" : "OFF"}</p>
+
+      <button onClick={() => sendCommand("TURN_ON", device.deviceId)}>
+        Turn On
+      </button>
+
+      <button onClick={() => sendCommand("TURN_OFF", device.deviceId)}>
+        Turn Off
+      </button>
     </section>
   );
 }
