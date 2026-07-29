@@ -7,7 +7,7 @@ interface Props {
   children: ReactNode;
 }
 
-export function Card({ title, icon, children }: Props) {
+export function Card({ title, children }: Props) {
   return (
     <section className="card">
       <header className="card__header">
