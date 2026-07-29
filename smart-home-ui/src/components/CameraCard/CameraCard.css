@@ -51,3 +51,11 @@
 .camera__button:hover {
   background: #115e59;
 }
+
+/* For mobile */
+
+@media (max-width: 768px) {
+  .camera__preview {
+    height: 220px;
+  }
+}

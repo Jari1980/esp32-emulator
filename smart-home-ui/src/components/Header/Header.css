@@ -54,3 +54,18 @@ p {
 .dot--offline {
   background: #ef4444;
 }
+
+/* For mobile */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 1rem;
+  }
+
+  .status {
+    width: 100%;
+  }
+}

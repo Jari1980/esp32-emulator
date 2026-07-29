@@ -21,3 +21,22 @@
 
   gap: 1.5rem;
 }
+
+/* For mobile view */
+.dashboard-page {
+  width: 100%;
+}
+
+.dashboard-camera {
+  width: 100%;
+}
+
+.dashboard-devices {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .dashboard-devices {
+    grid-template-columns: 1fr;
+  }
+}
