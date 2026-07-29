@@ -1,7 +1,9 @@
 import "./Header.css";
 import logo from "../../assets/logo.png";
+import { useSmartHome } from "../../context/SmartHomeContext";
 
 export function Header() {
+  const { connected } = useSmartHome();
   return (
     <header className="header">
       <div className="brand">
@@ -21,8 +23,9 @@ export function Header() {
       </div>
 
       <div className="status">
-        <span className="dot" />
-        Online
+        <span className={connected ? "dot dot--online" : "dot dot--offline"} />
+
+        {connected ? "Connected" : "Disconnected"}
       </div>
     </header>
   );

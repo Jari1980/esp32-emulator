@@ -12,6 +12,9 @@ import type { Esp32State } from "../types/Esp32State";
 
 interface SmartHomeContextValue {
   state?: Esp32State;
+
+  connected: boolean;
+
   sendCommand: (command: string, deviceId: string) => void;
 }
 
@@ -26,10 +29,20 @@ interface Props {
 export function SmartHomeProvider({ children }: Props) {
   const [state, setState] = useState<Esp32State>();
 
+  const [connected, setConnected] = useState(false);
+
   const websocket = useRef<ControlUnitWebSocket | null>(null);
 
   useEffect(() => {
     const connection = new ControlUnitWebSocket();
+
+    connection.onOpen(() => {
+      setConnected(true);
+    });
+
+    connection.onClose(() => {
+      setConnected(false);
+    });
 
     connection.onMessage((message) => {
       setState(message.payload);
@@ -38,6 +51,10 @@ export function SmartHomeProvider({ children }: Props) {
     connection.connect();
 
     websocket.current = connection;
+
+    return () => {
+      connection.disconnect?.();
+    };
   }, []);
 
   function sendCommand(command: string, deviceId: string) {
@@ -54,6 +71,7 @@ export function SmartHomeProvider({ children }: Props) {
     <SmartHomeContext.Provider
       value={{
         state,
+        connected,
         sendCommand,
       }}
     >

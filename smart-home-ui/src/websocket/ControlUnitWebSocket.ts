@@ -1,39 +1,53 @@
 import { config } from "../config";
-import type { WebSocketMessage } from "../types/WebSocketMessage";
 
 export class ControlUnitWebSocket {
   private socket?: WebSocket;
 
-  private messageHandler?: (message: WebSocketMessage) => void;
+  private openHandler?: () => void;
+
+  private closeHandler?: () => void;
+
+  private messageHandler?: (message: any) => void;
 
   connect(): void {
     this.socket = new WebSocket(config.websocketUrl);
 
     this.socket.onopen = () => {
-      console.log("Connected");
+      console.log("Connected to Control Unit");
+
+      this.openHandler?.();
     };
 
     this.socket.onclose = () => {
-      console.log("Disconnected");
+      console.log("Disconnected from Control Unit");
+
+      this.closeHandler?.();
     };
 
     this.socket.onmessage = (event) => {
-      const message = JSON.parse(event.data) as WebSocketMessage;
+      const message = JSON.parse(event.data);
 
       this.messageHandler?.(message);
     };
   }
 
-  onMessage(handler: (message: WebSocketMessage) => void): void {
-    this.messageHandler = handler;
+  onOpen(callback: () => void) {
+    this.openHandler = callback;
   }
 
-  send(message: unknown): void {
-    if (!this.socket) {
-      console.error("WebSocket not connected");
-      return;
-    }
+  onClose(callback: () => void) {
+    this.closeHandler = callback;
+  }
 
-    this.socket.send(JSON.stringify(message));
+  onMessage(callback: (message: any) => void) {
+    this.messageHandler = callback;
+  }
+
+  send(message: unknown) {
+    this.socket?.send(JSON.stringify(message));
+  }
+
+  disconnect() {
+    this.socket?.close();
   }
 }
