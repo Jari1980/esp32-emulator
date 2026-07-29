@@ -4,6 +4,11 @@ import { ControlUnitWebSocket } from "./websocket";
 function App() {
   useEffect(() => {
     const websocket = new ControlUnitWebSocket();
+
+    websocket.onMessage((message) => {
+      console.log("STATE:", message.payload);
+    });
+
     websocket.connect();
   }, []);
 

@@ -1,7 +1,10 @@
 import { config } from "../config";
+import type { WebSocketMessage } from "../types/WebSocketMessage";
 
 export class ControlUnitWebSocket {
   private socket?: WebSocket;
+
+  private messageHandler?: (message: WebSocketMessage) => void;
 
   connect(): void {
     this.socket = new WebSocket(config.websocketUrl);
@@ -15,7 +18,13 @@ export class ControlUnitWebSocket {
     };
 
     this.socket.onmessage = (event) => {
-      console.log("Message received:", event.data);
+      const message = JSON.parse(event.data) as WebSocketMessage;
+
+      this.messageHandler?.(message);
     };
+  }
+
+  onMessage(handler: (message: WebSocketMessage) => void): void {
+    this.messageHandler = handler;
   }
 }
