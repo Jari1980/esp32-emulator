@@ -1,19 +1,23 @@
-.dashboard {
+.dashboard-page {
   display: flex;
-
   flex-direction: column;
-
   gap: 2rem;
 }
 
-.camera-section {
+.dashboard-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dashboard-camera {
   width: 100%;
 }
 
-.devices {
+.dashboard-devices {
   display: grid;
 
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 
   gap: 1.5rem;
 }

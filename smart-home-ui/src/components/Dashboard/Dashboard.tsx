@@ -5,8 +5,9 @@ import { DeviceCard } from "../DeviceCard/DeviceCard";
 import { TemperatureCard } from "../TemperatureCard/TemperatureCard";
 import { LightCard } from "../LightCard/LightCard";
 import { MotionCard } from "../MotionCard/MotionCard";
-import "./Dashboard.css";
 import { CameraCard } from "../CameraCard/CameraCard";
+
+import "./Dashboard.css";
 
 function renderDevice(device: DeviceState) {
   switch (device.type) {
@@ -32,18 +33,20 @@ export function Dashboard() {
   }
 
   return (
-    <main>
-      <h2>{state.name}</h2>
+    <main className="dashboard-page">
+      <header className="dashboard-header">
+        <h2>{state.name}</h2>
 
-      <p>System uptime: {state.uptime}s</p>
+        <p>System uptime: {state.uptime}s</p>
+      </header>
 
-      <div className="dashboard">
-        <div className="camera-section">
-          <CameraCard />
-        </div>
+      <section className="dashboard-camera">
+        <CameraCard />
+      </section>
 
-        <div className="devices">{state.devices.map(renderDevice)}</div>
-      </div>
+      <section className="dashboard-devices">
+        {state.devices.map(renderDevice)}
+      </section>
     </main>
   );
 }
