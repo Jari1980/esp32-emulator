@@ -10,7 +10,17 @@ export function MotionCard({ device }: Props) {
 
   return (
     <Card title="Motion">
-      <strong>{detected ? "Detected" : "Clear"}</strong>
+      <div className="status-value">
+        <span
+          className={
+            detected
+              ? "status-dot status-dot--on"
+              : "status-dot status-dot--off"
+          }
+        />
+
+        {detected ? "Detected" : "Clear"}
+      </div>
 
       <div className="card__metadata">Device ID: {device.deviceId}</div>
     </Card>

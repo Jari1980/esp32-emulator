@@ -107,3 +107,33 @@
   font-size: 0.85rem;
   color: #64748b;
 }
+
+.status-value {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.75rem;
+
+  font-size: 1.8rem;
+
+  font-weight: 700;
+
+  color: #f8fafc;
+}
+
+.status-dot {
+  width: 12px;
+
+  height: 12px;
+
+  border-radius: 50%;
+}
+
+.status-dot--on {
+  background: #22c55e;
+}
+
+.status-dot--off {
+  background: #64748b;
+}

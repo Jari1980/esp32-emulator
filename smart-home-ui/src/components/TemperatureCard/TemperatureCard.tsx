@@ -10,9 +10,7 @@ export function TemperatureCard({ device }: Props) {
 
   return (
     <Card title="Temperature">
-      <div>
-        <strong>{temperature} °C</strong>
-      </div>
+      <div className="status-value">{temperature.toFixed(1)}°C</div>
 
       <div className="card__metadata">Device ID: {device.deviceId}</div>
     </Card>
