@@ -1,0 +1,33 @@
+.camera-placeholder {
+  height: 420px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: linear-gradient(135deg, #020617, #111827);
+
+  border-radius: 12px;
+
+  color: #94a3b8;
+
+  border: 1px dashed #334155;
+}
+
+.camera-placeholder p {
+  margin: 0;
+
+  font-size: 1.1rem;
+}
+
+.camera-placeholder span {
+  margin-top: 0.5rem;
+
+  font-size: 0.9rem;
+
+  color: #64748b;
+}
