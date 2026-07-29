@@ -27,4 +27,13 @@ export class ControlUnitWebSocket {
   onMessage(handler: (message: WebSocketMessage) => void): void {
     this.messageHandler = handler;
   }
+
+  send(message: unknown): void {
+    if (!this.socket) {
+      console.error("WebSocket not connected");
+      return;
+    }
+
+    this.socket.send(JSON.stringify(message));
+  }
 }
