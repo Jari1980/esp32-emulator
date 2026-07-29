@@ -1,5 +1,5 @@
 .card {
-  background: #1e293b;
+  background: linear-gradient(145deg, #1e293b, #172033);
 
   border-radius: 16px;
 
@@ -11,21 +11,22 @@
 
   transition:
     transform 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .card:hover {
   transform: translateY(-3px);
 
   border-color: #22c55e;
+
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
 }
 
 .card__header {
   display: flex;
 
   align-items: center;
-
-  gap: 0.75rem;
 
   margin-bottom: 1rem;
 }
@@ -34,6 +35,10 @@
   margin: 0;
 
   font-size: 1.1rem;
+
+  font-weight: 600;
+
+  color: #f8fafc;
 }
 
 .card__content {
