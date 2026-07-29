@@ -13,5 +13,9 @@ export class ControlUnitWebSocket {
     this.socket.onclose = () => {
       console.log("Disconnected");
     };
+
+    this.socket.onmessage = (event) => {
+      console.log("Message received:", event.data);
+    };
   }
 }
