@@ -1,0 +1,41 @@
+.card {
+  background: #1e293b;
+
+  border-radius: 16px;
+
+  padding: 1.5rem;
+
+  border: 1px solid #334155;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+
+  border-color: #22c55e;
+}
+
+.card__header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.75rem;
+
+  margin-bottom: 1rem;
+}
+
+.card__header h2 {
+  margin: 0;
+
+  font-size: 1.1rem;
+}
+
+.card__content {
+  color: #cbd5e1;
+}

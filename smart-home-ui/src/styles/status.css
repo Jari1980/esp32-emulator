@@ -1,0 +1,50 @@
+.status-value {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+
+  border-radius: 50%;
+}
+
+.status-dot--on {
+  background: #22c55e;
+}
+
+.status-dot--off {
+  background: #64748b;
+}
+
+.status-dot--warning {
+  background: #ef4444;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.card-actions button {
+  background: #22c55e;
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  padding: 0.5rem 1rem;
+
+  cursor: pointer;
+}
+
+.card-actions button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

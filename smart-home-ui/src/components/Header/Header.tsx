@@ -5,7 +5,13 @@ export function Header() {
   return (
     <header className="header">
       <div className="brand">
-        <div className="logo-placeholder"><img className="header__logo" src={logo} alt="Home Surveillance logo" /></div>
+        <div className="header_logo">
+          <img
+            className="header__logo"
+            src={logo}
+            alt="Home Surveillance logo"
+          />
+        </div>
 
         <div>
           <h1>Broccoli Home</h1>

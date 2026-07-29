@@ -1,4 +1,5 @@
 import type { DeviceState } from "../../types/DeviceState";
+import { Card } from "../Card/Card";
 
 interface Props {
   device: DeviceState;
@@ -8,10 +9,18 @@ export function MotionCard({ device }: Props) {
   const detected = device.state.motionDetected as boolean;
 
   return (
-    <section>
-      <h2>Motion</h2>
+    <Card title="Motion">
+      <div className="status-value">
+        <span
+          className={
+            detected
+              ? "status-dot status-dot--warning"
+              : "status-dot status-dot--off"
+          }
+        />
 
-      <p>{detected ? "Movement detected" : "No movement"}</p>
-    </section>
+        {detected ? "Movement detected" : "No movement"}
+      </div>
+    </Card>
   );
 }

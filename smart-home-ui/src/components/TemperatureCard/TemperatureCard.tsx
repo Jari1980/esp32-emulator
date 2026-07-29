@@ -1,4 +1,5 @@
 import type { DeviceState } from "../../types/DeviceState";
+import { Card } from "../Card/Card";
 
 interface Props {
   device: DeviceState;
@@ -8,10 +9,10 @@ export function TemperatureCard({ device }: Props) {
   const temperature = device.state.temperature as number;
 
   return (
-    <section>
-      <h2>Temperature</h2>
+    <Card title="Temperature">
+      <div className="temperature-value">{temperature}°C</div>
 
-      <p>{temperature} °C</p>
-    </section>
+      <p>Room temperature</p>
+    </Card>
   );
 }

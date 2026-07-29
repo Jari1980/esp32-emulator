@@ -5,6 +5,7 @@ import { DeviceCard } from "../DeviceCard/DeviceCard";
 import { TemperatureCard } from "../TemperatureCard/TemperatureCard";
 import { LightCard } from "../LightCard/LightCard";
 import { MotionCard } from "../MotionCard/MotionCard";
+import "./Dashboard.css";
 
 function renderDevice(device: DeviceState) {
   switch (device.type) {
@@ -35,7 +36,7 @@ export function Dashboard() {
 
       <p>System uptime: {state.uptime}s</p>
 
-      {state.devices.map(renderDevice)}
+      <div className="devices">{state.devices.map(renderDevice)}</div>
     </main>
   );
 }
