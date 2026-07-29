@@ -34,9 +34,7 @@ export function Dashboard() {
 
   return (
     <main className="dashboard-page">
-      <header className="dashboard-header">
-        <h2>{state.name}</h2>
-
+      <header className="dashboard-info">
         <p>System uptime: {state.uptime}s</p>
       </header>
 
