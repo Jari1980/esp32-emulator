@@ -31,9 +31,9 @@ export function Dashboard() {
 
   return (
     <main>
-      <h1>{state.name}</h1>
+      <h2>{state.name}</h2>
 
-      <p>Uptime: {state.uptime}s</p>
+      <p>System uptime: {state.uptime}s</p>
 
       {state.devices.map(renderDevice)}
     </main>

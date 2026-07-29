@@ -1,7 +1,12 @@
+import { Layout } from "./components/Layout/Layout";
 import { Dashboard } from "./components/Dashboard/Dashboard";
 
 function App() {
-  return <Dashboard />;
+  return (
+    <Layout>
+      <Dashboard />
+    </Layout>
+  );
 }
 
 export default App;
