@@ -39,6 +39,7 @@ export function LightCard({ device }: Props) {
           Turn Off
         </button>
       </div>
+      <div className="card__metadata">Device ID: {device.deviceId}</div>
     </Card>
   );
 }

@@ -10,9 +10,11 @@ export function TemperatureCard({ device }: Props) {
 
   return (
     <Card title="Temperature">
-      <div className="temperature-value">{temperature}°C</div>
+      <div>
+        <strong>{temperature} °C</strong>
+      </div>
 
-      <p>Room temperature</p>
+      <div className="card__metadata">Device ID: {device.deviceId}</div>
     </Card>
   );
 }
