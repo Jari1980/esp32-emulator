@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { ControlUnitWebSocket } from "./websocket";
+import { useSmartHome } from "./context/SmartHomeContext";
 
 function App() {
+  const { state } = useSmartHome();
   useEffect(() => {
     const websocket = new ControlUnitWebSocket();
 
@@ -15,6 +17,8 @@ function App() {
   return (
     <main>
       <h1>Smart Home UI</h1>
+
+      <pre>{JSON.stringify(state, null, 2)}</pre>
     </main>
   );
 }
