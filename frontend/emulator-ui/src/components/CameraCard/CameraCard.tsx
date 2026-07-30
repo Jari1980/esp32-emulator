@@ -23,7 +23,7 @@ function CameraCard() {
           <span>{online ? "Online" : "Offline"}</span>
         </div>
 
-        <p>Mode: {mode}</p>
+        <p>Frame: {cameraState?.frame ?? 0}</p>
 
         <button className="camera__button">Open fullscreen</button>
       </div>
