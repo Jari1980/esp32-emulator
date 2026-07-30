@@ -30,10 +30,7 @@ export function Dashboard() {
   if (!state) {
     return <p>Waiting for ESP32...</p>;
   }
-  const camera = state.devices.find(
-  device => device.type === "camera"
-);
-
+  const camera = state.devices.find((device) => device.type === "camera");
 
   if (!state) {
     return <p>Waiting for ESP32...</p>;
@@ -46,13 +43,15 @@ export function Dashboard() {
       </header>
 
       {camera && (
-      <section className="dashboard-camera">
-        <CameraCard device={camera} />
-      </section>
-    )}
+        <section className="dashboard-camera">
+          <CameraCard device={camera} />
+        </section>
+      )}
 
       <section className="dashboard-devices">
-        {state.devices.map(renderDevice)}
+        {state.devices
+          .filter((device) => device.type !== "camera")
+          .map(renderDevice)}
       </section>
     </main>
   );
