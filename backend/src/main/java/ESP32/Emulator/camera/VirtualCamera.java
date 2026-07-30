@@ -42,7 +42,6 @@ public class VirtualCamera implements Device, StateProvider, Updatable {
     public Map<String, Object> getState() {
         return Map.of(
                 "online", online,
-                "type", "virtual",
                 "frame", frame
         );
     }
