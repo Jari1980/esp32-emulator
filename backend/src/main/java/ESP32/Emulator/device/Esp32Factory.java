@@ -1,6 +1,7 @@
 package ESP32.Emulator.device;
 
 import ESP32.Emulator.actuator.Led;
+import ESP32.Emulator.camera.VirtualCamera;
 import ESP32.Emulator.event.EventBus;
 import ESP32.Emulator.gpio.GpioPin;
 import ESP32.Emulator.sensor.MotionSensor;
@@ -46,6 +47,15 @@ public class Esp32Factory {
                                     device.id(),
                                     device.name(),
                                     eventBus
+                            )
+                    );
+                }
+
+                case "camera" -> {
+                    esp32.addDevice(
+                            new VirtualCamera(
+                                    device.id(),
+                                    device.name()
                             )
                     );
                 }

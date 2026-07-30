@@ -17,6 +17,11 @@
       "type": "motion",
       "id": "motion-001",
       "name": "Motion Sensor"
+    },
+    {
+      "type": "camera",
+      "id": "camera-001",
+      "name": "Virtual Camera"
     }
   ]
 }
