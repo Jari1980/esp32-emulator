@@ -1,15 +1,32 @@
 import { Card } from "../Card/Card";
 import "./CameraCard.css";
+import type { DeviceState } from "../../types/DeviceState";
+import type { CameraState } from "../../types/CameraState";
 
-export function CameraCard() {
+type Props = {
+  device: DeviceState;
+};
+
+export function CameraCard({ device }: Props) {
+
+  const cameraState = device.state as unknown as CameraState;
+
   return (
     <Card title="Camera">
       <div className="camera">
         <div className="camera__preview">
-          <div className="camera__status">No signal</div>
+          <div className="camera__status">
+            {cameraState.online ? "Online" : "Offline"}
+          </div>
         </div>
 
-        <button className="camera__button">Open fullscreen</button>
+        <p>
+          Mode: {cameraState.mode}
+        </p>
+
+        <button className="camera__button">
+          Open fullscreen
+        </button>
       </div>
     </Card>
   );

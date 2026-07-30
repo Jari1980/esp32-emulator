@@ -27,6 +27,13 @@ function renderDevice(device: DeviceState) {
 
 export function Dashboard() {
   const { state } = useSmartHome();
+  if (!state) {
+    return <p>Waiting for ESP32...</p>;
+  }
+  const camera = state.devices.find(
+  device => device.type === "camera"
+);
+
 
   if (!state) {
     return <p>Waiting for ESP32...</p>;
@@ -38,9 +45,11 @@ export function Dashboard() {
         <p>System uptime: {state.uptime}s</p>
       </header>
 
+      {camera && (
       <section className="dashboard-camera">
-        <CameraCard />
+        <CameraCard device={camera} />
       </section>
+    )}
 
       <section className="dashboard-devices">
         {state.devices.map(renderDevice)}
