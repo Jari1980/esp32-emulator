@@ -14,7 +14,6 @@ function CameraCard() {
   const cameraState = camera?.state as unknown as CameraState;
 
   const online = cameraState?.online === true;
-  const mode = cameraState?.mode ?? "unknown";
 
   return (
     <Card title="Camera">
