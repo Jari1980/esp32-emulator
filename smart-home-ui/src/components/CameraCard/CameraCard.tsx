@@ -8,7 +8,6 @@ type Props = {
 };
 
 export function CameraCard({ device }: Props) {
-
   const cameraState = device.state as unknown as CameraState;
 
   return (
@@ -20,13 +19,9 @@ export function CameraCard({ device }: Props) {
           </div>
         </div>
 
-        <p>
-          Mode: {cameraState.mode}
-        </p>
+        <p>Frame: {cameraState.frame ?? 0}</p>
 
-        <button className="camera__button">
-          Open fullscreen
-        </button>
+        <button className="camera__button">Open fullscreen</button>
       </div>
     </Card>
   );
