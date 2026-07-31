@@ -1,6 +1,12 @@
 #include <Arduino.h>
+#include "firmware/Firmware.h"
 
-void setup() {
+
+Firmware firmware;
+
+
+void setup()
+{
     Serial.begin(115200);
 
     delay(1000);
@@ -12,9 +18,13 @@ void setup() {
     Serial.println("Device  : esp32-001");
     Serial.println("Status  : Boot successful");
     Serial.println("====================================");
+
+
+    firmware.initialize();
 }
 
-void loop() {
-    Serial.println("Heartbeat");
-    delay(1000);
+
+void loop()
+{
+    firmware.update();
 }

@@ -75,3 +75,8 @@ Desktop.ini
 
 # macOS
 .DS_Store
+
+
+# ESP32 local secrets
+device/include/config/WifiSecrets.h
+device/include/config/MqttSecrets.h
