@@ -29,6 +29,8 @@ public:
 
     bool isOn() const;
 
+    bool hasStateChanged();
+
     StateProvider* getStateProvider() override;
 
     void writeState(JsonObject state) override;
@@ -39,4 +41,6 @@ private:
     int pin;
 
     bool state = false;
+
+    bool stateChanged = false;
 };

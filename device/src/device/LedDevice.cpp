@@ -25,17 +25,27 @@ void LedDevice::update()
 
 void LedDevice::turnOn()
 {
-    digitalWrite(pin, HIGH);
+    if(state)
+        return;
 
     state = true;
+
+    digitalWrite(pin, HIGH);
+
+    stateChanged = true;
 }
 
 
 void LedDevice::turnOff()
 {
-    digitalWrite(pin, LOW);
+    if(!state)
+        return;
 
     state = false;
+
+    digitalWrite(pin, LOW);
+
+    stateChanged = true;
 }
 
 
@@ -83,4 +93,15 @@ StateProvider* LedDevice::getStateProvider()
 void LedDevice::writeState(JsonObject state)
 {
     state["ledOn"] = this->state;
+}
+
+bool LedDevice::hasStateChanged()
+{
+    if(stateChanged)
+    {
+        stateChanged = false;
+        return true;
+    }
+
+    return false;
 }

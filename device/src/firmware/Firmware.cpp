@@ -14,6 +14,10 @@ void Firmware::initialize()
 
     commandHandler = new CommandHandler(&registry);
 
+    wifi.connect();
+    mqtt.setCommandHandler(commandHandler);
+    mqtt.connect();
+
     registry.add(&led);
     registry.initialize();
 
@@ -23,20 +27,20 @@ void Firmware::initialize()
 
 void Firmware::update()
 {
+    mqtt.loop();
+
     registry.update();
 
-    if(uptimeSeconds - lastStatePublish >= 5)
+    if(led.hasStateChanged())
     {
-        lastStatePublish = uptimeSeconds;
+        String json = Esp32State::createJson(
+        registry,
+        uptimeSeconds
+    );
 
-        String json =
-            Esp32State::createJson(
-               registry,
-               uptimeSeconds
-         );
-
-        Serial.println(json);
+        mqtt.publishState(json);
     }
+
 
     if(Serial.available())
     {

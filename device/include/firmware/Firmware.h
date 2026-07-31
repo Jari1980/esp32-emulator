@@ -2,6 +2,8 @@
 #include "device/LedDevice.h"
 #include "device/DeviceRegistry.h"
 #include "device/command/CommandHandler.h"
+#include "network/WifiManager.h"
+#include "network/MqttManager.h"
 
 class Firmware
 {
@@ -15,4 +17,6 @@ private:
     unsigned long uptimeSeconds = 0;
     unsigned long lastUptimeUpdate = 0;
     unsigned long lastStatePublish = 0;
+    WifiManager wifi;
+    MqttManager mqtt;
 };
