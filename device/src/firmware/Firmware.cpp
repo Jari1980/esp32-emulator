@@ -22,6 +22,13 @@ void Firmware::initialize()
     registry.initialize();
 
     Serial.println("LED initialized on GPIO 2");
+
+    String json = Esp32State::createJson(
+        registry,
+        uptimeSeconds
+    );
+
+    mqtt.publishState(json);
 }
 
 
