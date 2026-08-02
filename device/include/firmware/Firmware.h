@@ -1,5 +1,6 @@
 #pragma once
 #include "device/LedDevice.h"
+#include "device/ThermistorDevice.h"
 #include "device/DeviceRegistry.h"
 #include "device/command/CommandHandler.h"
 #include "network/WifiManager.h"
@@ -13,6 +14,7 @@ public:
 private:
     DeviceRegistry registry;
     LedDevice led{2};
+    ThermistorDevice thermistor{4};
     CommandHandler* commandHandler;
     unsigned long uptimeSeconds = 0;
     unsigned long lastUptimeUpdate = 0;
