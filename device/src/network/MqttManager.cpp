@@ -78,6 +78,8 @@ void MqttManager::connect()
     Serial.println("Connecting MQTT...");
     Serial.println("------------------------------------");
 
+    mqttClient.setBufferSize(1024);
+
     Serial.print("MQTT server: ");
     Serial.println(MQTT_SERVER);
 
@@ -152,10 +154,17 @@ void MqttManager::loop()
 
 void MqttManager::publishState(String payload)
 {
-    mqttClient.publish(
+    Serial.print("Payload size: ");
+    Serial.println(payload.length());
+
+    bool result = mqttClient.publish(
         "home/esp32/esp32-001/state",
         payload.c_str()
     );
+
+    Serial.println(result ? "SUCCESS" : "FAILED");
+    
+    
 }
 
 

@@ -16,11 +16,13 @@ void Firmware::initialize()
     commandHandler = new CommandHandler(&registry);
 
     wifi.connect();
+    cameraServer.start();
     mqtt.setCommandHandler(commandHandler);
     mqtt.connect();
 
     registry.add(&led);
     registry.add(&thermistor);
+    registry.add(&camera);
     registry.initialize();
 
     Serial.println("LED initialized on GPIO 2");
@@ -37,6 +39,8 @@ void Firmware::initialize()
 void Firmware::update()
 {
     mqtt.loop();
+
+    cameraServer.loop();
 
     registry.update();
 
