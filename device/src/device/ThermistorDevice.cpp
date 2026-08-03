@@ -57,11 +57,17 @@ void ThermistorDevice::update()
 
     float temperatureK = 1.0 / ((1.0 / T0) + (log(resistance / R0) / B));
 
-    temperature = temperatureK - 273.15;
-
+    float newTemperature = temperatureK - 273.15;
 
     // Calibration from physical test
-    temperature += 8.0;
+    newTemperature += 8.0;
+
+
+    if (abs(newTemperature - temperature) >= 0.1)
+    {
+        temperature = newTemperature;
+        changed = true;
+    }
 
 
     Serial.print("Thermistor: ");
@@ -111,4 +117,16 @@ StateProvider* ThermistorDevice::getStateProvider()
 void ThermistorDevice::writeState(JsonObject state)
 {
     state["temperature"] = temperature;
+}
+
+
+bool ThermistorDevice::hasChanged()
+{
+    if(changed)
+    {
+        changed = false;
+        return true;
+    }
+
+    return false;
 }

@@ -28,11 +28,16 @@ public:
 
     void writeState(JsonObject state) override;
 
+    bool hasChanged();
+    void clearChanged();
+
 
 private:
 
     int pin;
 
     float temperature = 0.0;
+
+    bool changed = false;
 
 };
