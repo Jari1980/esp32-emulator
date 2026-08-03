@@ -1,12 +1,12 @@
-# ESP32 Smart Home Simulator
+# ESP32 Smart Home Platform
 
-A simulated smart home environment for developing and testing IoT communication.
+A small IoT platform for developing and testing communication between devices, applications, and services.
 
-This project is mainly built as a learning project to explore communication between systems using **MQTT** and **WebSocket** technologies.
+This project is built as a learning project to explore IoT architecture using **MQTT**, **WebSocket**, and ESP32 hardware.
 
-The goal is to understand how device communication, real-time updates, and application control can be designed in an IoT-style architecture.
+The goal is to understand how device communication, real-time updates, and application control can be designed in a flexible IoT-style system.
 
-The project simulates an ESP32 device and communicates through MQTT. In theory, the same MQTT interface could be used with real ESP32 hardware.
+The ESP32 layer can run either on real hardware or through an emulator. Both use the same communication model, allowing simulated devices to be replaced with physical devices.
 
 ## Architecture
 
@@ -14,29 +14,36 @@ The project simulates an ESP32 device and communicates through MQTT. In theory, 
 +-------------------+        +--------------+        +----------------+
 | ESP32 Emulator    | <----> | MQTT Broker  | <----> | Control Unit   |
 |                   |        |              |        |                |
-| Backend           |        |              |        | Backend        |
-| Frontend Console  |        |              |        | Frontend UI    |
-|                   |        |              |        | (Todo)         |
+| Hardware Layer    |        |              |        | Backend        |
+| Device Emulator   |        |              |        | Frontend UI    |
+|                   |        |              |        |                |
 +-------------------+        +--------------+        +----------------+
 ```
 
-## ESP32 Emulator
+## ESP32 Layer
 
-The emulator represents the hardware layer.
+The ESP32 layer represents the hardware side of the system.
 
-It simulates:
+It supports:
 
-- ESP32 device behaviour
-- Sensors
-- GPIO devices
-- Device state
-- Hardware events
+- Real ESP32 hardware
+- Device emulator for development and testing
+- Device state management
+- Hardware event simulation
 
-The Emulator Console is used for development and testing:
+Supported devices:
+
+- LED GPIO output
+- Temperature sensor
+- Motion sensor simulation
+- Camera module
+
+The emulator and hardware layer are used to:
 
 - View device state
-- Control simulated devices
+- Control devices
 - Test MQTT communication
+- Develop features without requiring all physical hardware
 
 ## Communication
 
@@ -50,17 +57,17 @@ Examples:
 
 - Device state publishing
 - Sending commands
-- Connecting simulated hardware with future real hardware
+- Connecting simulated hardware with real hardware
 
 ### WebSocket
 
-Used for real-time communication between backend services and web frontends.
+Used for real-time communication between backend services and frontend applications.
 
 Examples:
 
 - Live state updates
 - Immediate UI changes
-- Monitoring device events
+- Device monitoring
 
 ## Current Devices
 
@@ -100,9 +107,16 @@ TRIGGER_MOTION
 RESET_MOTION
 ```
 
+### Camera
+
+- ESP32 camera module support
+- JPEG snapshot capture
+- HTTP image endpoint
+- MQTT status reporting
+
 ## MQTT Topics
 
-MQTT is the communication contract between systems.
+MQTT acts as the communication contract between systems.
 
 ### State Topic
 
@@ -125,21 +139,4 @@ Example command:
 }
 ```
 
-## Future Development
 
-Next step is building the Control Unit.
-
-The Control Unit will provide:
-
-- User interface
-- Automation logic
-- Device control
-- User management
-
-In theory the ESP32 Emulator can later be replaced by real ESP32 hardware without changing the Control Unit communication model.
-
-## Goal
-
-The goal is to separate the hardware layer from the application layer.
-
-The MQTT interface allows simulated hardware, real hardware, and applications to communicate using the same protocol.
