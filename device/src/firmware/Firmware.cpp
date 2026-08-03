@@ -40,12 +40,32 @@ void Firmware::update()
 
     registry.update();
 
+    bool stateChanged = false;
+
+
     if(led.hasStateChanged() || thermistor.hasChanged())
     {
+        stateChanged = true;
+    }
+
+
+    if(millis() - lastStatePublish >= 10000)
+    {
+        stateChanged = true;
+    }
+
+
+    if(stateChanged)
+    {
+        lastStatePublish = millis();
+
         String json = Esp32State::createJson(
             registry,
             uptimeSeconds
         );
+
+        Serial.println("Publishing state:");
+        Serial.println(json);
 
         mqtt.publishState(json);
     }
