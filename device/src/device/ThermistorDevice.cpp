@@ -82,7 +82,7 @@ const char* ThermistorDevice::getId()
 
 const char* ThermistorDevice::getType()
 {
-    return "thermistor";
+    return "temperature";
 }
 
 
