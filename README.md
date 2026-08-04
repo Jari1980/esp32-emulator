@@ -139,4 +139,12 @@ Example command:
 }
 ```
 
+## Images
+
+**Emulator connected**
+<img width="2419" height="1155" alt="emuConnected" src="https://github.com/user-attachments/assets/b3585831-47ab-4279-9f32-e34a5a349683" />
+
+**Device connected**
+<img width="2399" height="1133" alt="devConnected" src="https://github.com/user-attachments/assets/17086c99-e6ef-46d7-8496-914855556411" />
+
 
