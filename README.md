@@ -147,4 +147,8 @@ Example command:
 **Device connected**
 <img width="2399" height="1133" alt="devConnected" src="https://github.com/user-attachments/assets/17086c99-e6ef-46d7-8496-914855556411" />
 
+**My setup** Esp32 with camera, led and thermistor
+<img width="759" height="412" alt="mySetup" src="https://github.com/user-attachments/assets/508fddcf-9f00-49b9-9ebf-24bcb3f739de" />
+
+
 
